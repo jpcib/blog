@@ -1,0 +1,19 @@
+<script>
+// Pinta cada categoría con su color de país (sistema de diseño juancib.ar).
+// Para sumar una categoría: agregala acá con el próximo país libre.
+document.addEventListener("DOMContentLoaded", function () {
+  var mapa = {
+    "sobrepensar": "serie",
+    "r": "verde",
+    "sf": "verde",
+    "análisis espacial": "durazno",
+    "transporte": "lila",
+    "docencia": "amarillo",
+    "estadística": "rosa"
+  };
+  document.querySelectorAll(".quarto-category, .listing-category").forEach(function (el) {
+    var k = el.textContent.trim().toLowerCase();
+    el.classList.add("jc-cat--" + (mapa[k] || "linea"));
+  });
+});
+</script>

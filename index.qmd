@@ -8,5 +8,6 @@ listing:
   feed: true
   fields: [image, title, categories, description, date]
   image-height: 200px
+  image-placeholder: img/curvas-de-nivel-claro.svg
 page-layout: full
 ---

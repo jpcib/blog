@@ -2,8 +2,10 @@ project:
   type: website
   resources:
     - CNAME
+    - img/*
 
 lang: es
+date-format: "DD/MM/YYYY"
 
 # El código R se ejecuta solo en local. Los resultados quedan en _freeze/ (se versiona)
 # y no se recalculan salvo que cambie el .qmd del post.
@@ -31,6 +33,9 @@ website:
       [GitHub](https://github.com/jpcib) ·
       [LinkedIn](https://www.linkedin.com/in/juan-cibantos/)
 
+# Look & feel: sistema de diseño juancib.ar (_brand.yml + styles.css)
 format:
   html:
-    theme: cosmo
+    theme: [cosmo, brand]
+    css: styles.css
+    include-after-body: categorias.html
