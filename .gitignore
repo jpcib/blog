@@ -1,0 +1,13 @@
+/.quarto/
+/_site/
+**/*.quarto_ipynb
+
+# Datos que bajan los posts al renderizar (se vuelven a descargar si faltan)
+posts/*/data/
+
+# R / RStudio
+.Rproj.user/
+.Rhistory
+.RData
+
+# Los resultados de R sí se versionan: no ignorar _freeze/

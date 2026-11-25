@@ -1,0 +1,36 @@
+project:
+  type: website
+  resources:
+    - CNAME
+
+lang: es
+
+# El código R se ejecuta solo en local. Los resultados quedan en _freeze/ (se versiona)
+# y no se recalculan salvo que cambie el .qmd del post.
+execute:
+  freeze: auto
+  warning: false
+  message: false
+
+website:
+  title: "Blog · Juan Cib"
+  description: "Análisis de datos, R y geografía, con el proceso a la vista."
+  site-url: "https://blog.juancib.ar"
+  navbar:
+    left:
+      - href: https://juancib.ar
+        text: "← juancib.ar"
+    right:
+      - href: https://juancib.ar/cv.html
+        text: CV
+      - icon: rss
+        href: index.xml
+  page-footer:
+    center: |
+      [Mail](mailto:jpcibantos@gmail.com) ·
+      [GitHub](https://github.com/jpcib) ·
+      [LinkedIn](https://www.linkedin.com/in/juan-cibantos/)
+
+format:
+  html:
+    theme: cosmo

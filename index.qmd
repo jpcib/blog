@@ -1,0 +1,12 @@
+---
+title: "Blog"
+listing:
+  contents: posts
+  type: grid
+  sort: "date desc"
+  categories: true
+  feed: true
+  fields: [image, title, categories, description, date]
+  image-height: 200px
+page-layout: full
+---
