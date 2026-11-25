@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Juan Cibantos">
+<meta name="dcterms.date" content="2026-08-10">
 <meta name="description" content="Y encontrar una excusa para hablar del subte">
 
 <title>Cómo complicar un problema sencillo – Blog · Juan Cib</title>
@@ -74,10 +75,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-9fa6dbbe6219e357c3a17d5a2c09c803.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d2800b5aef52857891e752670e942548.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-9fa6dbbe6219e357c3a17d5a2c09c803.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-1f71b9cfe2fcaf5086931245c1d2694b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-cfcc85d38a32d5d438fa76decbe54020.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-71b34b9e1684099ff378bcc50c0be380.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-cfcc85d38a32d5d438fa76decbe54020.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -136,9 +141,172 @@ window.Quarto = {
 };
 </script>
 
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="floating nav-fixed quarto-light">
+<body class="floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -173,6 +341,7 @@ window.Quarto = {
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo oscuro"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -210,6 +379,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">Cómo complicar un problema sencillo</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Código</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Mostrar todo el código</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Ocultar todo el código</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">Ver el código fuente</a></li></ul></div></div>
@@ -242,7 +412,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">8 de octubre de 2026</p>
+      <p class="date">08/10/2026</p>
     </div>
   </div>
   
@@ -819,8 +989,40 @@ Figura&nbsp;8: La red reconstruida usando sólo distancias entre estaciones, con
 </section>
 
 </main> <!-- /main -->
+<script>
+// Pinta cada categoría con su color de país (sistema de diseño juancib.ar).
+// Para sumar una categoría: agregala acá con el próximo país libre.
+document.addEventListener("DOMContentLoaded", function () {
+  var mapa = {
+    "sobrepensar": "serie",
+    "r": "verde",
+    "sf": "verde",
+    "análisis espacial": "durazno",
+    "transporte": "lila",
+    "docencia": "amarillo",
+    "estadística": "rosa"
+  };
+  document.querySelectorAll(".quarto-category, .listing-category").forEach(function (el) {
+    var k = el.textContent.trim().toLowerCase();
+    el.classList.add("jc-cat--" + (mapa[k] || "linea"));
+  });
+});
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -1306,539 +1508,542 @@ Figura&nbsp;8: La red reconstruida usando sólo distancias entre estaciones, con
 <span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/datos.R"</span>)</span>
 <span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/graficos.R"</span>)</span>
 <span id="cb32-38"><a href="#cb32-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-39"><a href="#cb32-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Formato de números para el texto: 1.234 / 1,2</span></span>
-<span id="cb32-40"><a href="#cb32-40" aria-hidden="true" tabindex="-1"></a>num <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">d =</span> <span class="dv">0</span>) <span class="fu">format</span>(<span class="fu">round</span>(x, d), <span class="at">big.mark =</span> <span class="st">"."</span>, <span class="at">decimal.mark =</span> <span class="st">","</span>, <span class="at">nsmall =</span> d, <span class="at">trim =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb32-41"><a href="#cb32-41" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb32-42"><a href="#cb32-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-45"><a href="#cb32-45" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb32-46"><a href="#cb32-46" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: resultados-vecino</span></span>
-<span id="cb32-47"><a href="#cb32-47" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
-<span id="cb32-48"><a href="#cb32-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-49"><a href="#cb32-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Red ordenada con el vecino más cercano desde la cabecera 2 (la que usan las</span></span>
-<span id="cb32-50"><a href="#cb32-50" aria-hidden="true" tabindex="-1"></a><span class="co"># pruebas). Se calcula acá para citar los metros en el TL;DR y en la conclusión.</span></span>
-<span id="cb32-51"><a href="#cb32-51" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/ordenar.R"</span>)</span>
-<span id="cb32-52"><a href="#cb32-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-53"><a href="#cb32-53" aria-hidden="true" tabindex="-1"></a>vecino_desde_cabecera_2 <span class="ot">&lt;-</span> <span class="cf">function</span>(datos) {</span>
-<span id="cb32-54"><a href="#cb32-54" aria-hidden="true" tabindex="-1"></a>  d   <span class="ot">&lt;-</span> <span class="fu">matriz_distancias</span>(datos)</span>
-<span id="cb32-55"><a href="#cb32-55" aria-hidden="true" tabindex="-1"></a>  n   <span class="ot">&lt;-</span> <span class="fu">nrow</span>(d)</span>
-<span id="cb32-56"><a href="#cb32-56" aria-hidden="true" tabindex="-1"></a>  rec <span class="ot">&lt;-</span> <span class="fu">encontrar_cabeceras</span>(datos)[<span class="dv">2</span>]</span>
-<span id="cb32-57"><a href="#cb32-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-58"><a href="#cb32-58" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (paso <span class="cf">in</span> <span class="fu">seq_len</span>(n <span class="sc">-</span> <span class="dv">1</span>)) {</span>
-<span id="cb32-59"><a href="#cb32-59" aria-hidden="true" tabindex="-1"></a>    candidatos <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">seq_len</span>(n), rec)</span>
-<span id="cb32-60"><a href="#cb32-60" aria-hidden="true" tabindex="-1"></a>    rec <span class="ot">&lt;-</span> <span class="fu">c</span>(rec, candidatos[<span class="fu">which.min</span>(d[rec[<span class="fu">length</span>(rec)], candidatos])])</span>
-<span id="cb32-61"><a href="#cb32-61" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb32-62"><a href="#cb32-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-63"><a href="#cb32-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(datos, rec)</span>
-<span id="cb32-64"><a href="#cb32-64" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-39"><a href="#cb32-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Fondo de papel en todo el PNG: con coord_equal() ggplot deja franjas fuera del plot</span></span>
+<span id="cb32-40"><a href="#cb32-40" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">dev.args =</span> <span class="fu">list</span>(<span class="at">bg =</span> ATLAS[[<span class="st">"placa"</span>]]))</span>
+<span id="cb32-41"><a href="#cb32-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-42"><a href="#cb32-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Formato de números para el texto: 1.234 / 1,2</span></span>
+<span id="cb32-43"><a href="#cb32-43" aria-hidden="true" tabindex="-1"></a>num <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">d =</span> <span class="dv">0</span>) <span class="fu">format</span>(<span class="fu">round</span>(x, d), <span class="at">big.mark =</span> <span class="st">"."</span>, <span class="at">decimal.mark =</span> <span class="st">","</span>, <span class="at">nsmall =</span> d, <span class="at">trim =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb32-44"><a href="#cb32-44" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-45"><a href="#cb32-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-48"><a href="#cb32-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-49"><a href="#cb32-49" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: resultados-vecino</span></span>
+<span id="cb32-50"><a href="#cb32-50" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb32-51"><a href="#cb32-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-52"><a href="#cb32-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Red ordenada con el vecino más cercano desde la cabecera 2 (la que usan las</span></span>
+<span id="cb32-53"><a href="#cb32-53" aria-hidden="true" tabindex="-1"></a><span class="co"># pruebas). Se calcula acá para citar los metros en el TL;DR y en la conclusión.</span></span>
+<span id="cb32-54"><a href="#cb32-54" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/ordenar.R"</span>)</span>
+<span id="cb32-55"><a href="#cb32-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-56"><a href="#cb32-56" aria-hidden="true" tabindex="-1"></a>vecino_desde_cabecera_2 <span class="ot">&lt;-</span> <span class="cf">function</span>(datos) {</span>
+<span id="cb32-57"><a href="#cb32-57" aria-hidden="true" tabindex="-1"></a>  d   <span class="ot">&lt;-</span> <span class="fu">matriz_distancias</span>(datos)</span>
+<span id="cb32-58"><a href="#cb32-58" aria-hidden="true" tabindex="-1"></a>  n   <span class="ot">&lt;-</span> <span class="fu">nrow</span>(d)</span>
+<span id="cb32-59"><a href="#cb32-59" aria-hidden="true" tabindex="-1"></a>  rec <span class="ot">&lt;-</span> <span class="fu">encontrar_cabeceras</span>(datos)[<span class="dv">2</span>]</span>
+<span id="cb32-60"><a href="#cb32-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-61"><a href="#cb32-61" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (paso <span class="cf">in</span> <span class="fu">seq_len</span>(n <span class="sc">-</span> <span class="dv">1</span>)) {</span>
+<span id="cb32-62"><a href="#cb32-62" aria-hidden="true" tabindex="-1"></a>    candidatos <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">seq_len</span>(n), rec)</span>
+<span id="cb32-63"><a href="#cb32-63" aria-hidden="true" tabindex="-1"></a>    rec <span class="ot">&lt;-</span> <span class="fu">c</span>(rec, candidatos[<span class="fu">which.min</span>(d[rec[<span class="fu">length</span>(rec)], candidatos])])</span>
+<span id="cb32-64"><a href="#cb32-64" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb32-65"><a href="#cb32-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-66"><a href="#cb32-66" aria-hidden="true" tabindex="-1"></a>red_vecino <span class="ot">&lt;-</span> <span class="fu">leer_estaciones</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb32-67"><a href="#cb32-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">split</span>(.<span class="sc">$</span>linea) <span class="sc">%&gt;%</span></span>
-<span id="cb32-68"><a href="#cb32-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(vecino_desde_cabecera_2)</span>
-<span id="cb32-69"><a href="#cb32-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-70"><a href="#cb32-70" aria-hidden="true" tabindex="-1"></a>tramos <span class="ot">&lt;-</span> red_vecino <span class="sc">%&gt;%</span></span>
-<span id="cb32-71"><a href="#cb32-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(distancias_consecutivas) <span class="sc">%&gt;%</span></span>
-<span id="cb32-72"><a href="#cb32-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_rbind</span>(<span class="at">names_to =</span> <span class="st">"linea"</span>)</span>
-<span id="cb32-73"><a href="#cb32-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-74"><a href="#cb32-74" aria-hidden="true" tabindex="-1"></a>media_lineas <span class="ot">&lt;-</span> tramos <span class="sc">%&gt;%</span></span>
-<span id="cb32-75"><a href="#cb32-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(linea) <span class="sc">%&gt;%</span></span>
-<span id="cb32-76"><a href="#cb32-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">media_m =</span> <span class="fu">mean</span>(distancia_m))</span>
-<span id="cb32-77"><a href="#cb32-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-78"><a href="#cb32-78" aria-hidden="true" tabindex="-1"></a>tramo_min   <span class="ot">&lt;-</span> <span class="fu">slice_min</span>(tramos, distancia_m, <span class="at">n =</span> <span class="dv">1</span>)</span>
-<span id="cb32-79"><a href="#cb32-79" aria-hidden="true" tabindex="-1"></a>tramo_max   <span class="ot">&lt;-</span> <span class="fu">slice_max</span>(tramos, distancia_m, <span class="at">n =</span> <span class="dv">1</span>)</span>
-<span id="cb32-80"><a href="#cb32-80" aria-hidden="true" tabindex="-1"></a>linea_junta <span class="ot">&lt;-</span> <span class="fu">slice_min</span>(media_lineas, media_m, <span class="at">n =</span> <span class="dv">1</span>)</span>
-<span id="cb32-81"><a href="#cb32-81" aria-hidden="true" tabindex="-1"></a>linea_lejos <span class="ot">&lt;-</span> <span class="fu">slice_max</span>(media_lineas, media_m, <span class="at">n =</span> <span class="dv">1</span>)</span>
-<span id="cb32-82"><a href="#cb32-82" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb32-83"><a href="#cb32-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-84"><a href="#cb32-84" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
-<span id="cb32-85"><a href="#cb32-85" aria-hidden="true" tabindex="-1"></a><span class="fu">## TL;DR</span></span>
+<span id="cb32-66"><a href="#cb32-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(datos, rec)</span>
+<span id="cb32-67"><a href="#cb32-67" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-68"><a href="#cb32-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-69"><a href="#cb32-69" aria-hidden="true" tabindex="-1"></a>red_vecino <span class="ot">&lt;-</span> <span class="fu">leer_estaciones</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb32-70"><a href="#cb32-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">split</span>(.<span class="sc">$</span>linea) <span class="sc">%&gt;%</span></span>
+<span id="cb32-71"><a href="#cb32-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(vecino_desde_cabecera_2)</span>
+<span id="cb32-72"><a href="#cb32-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-73"><a href="#cb32-73" aria-hidden="true" tabindex="-1"></a>tramos <span class="ot">&lt;-</span> red_vecino <span class="sc">%&gt;%</span></span>
+<span id="cb32-74"><a href="#cb32-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(distancias_consecutivas) <span class="sc">%&gt;%</span></span>
+<span id="cb32-75"><a href="#cb32-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_rbind</span>(<span class="at">names_to =</span> <span class="st">"linea"</span>)</span>
+<span id="cb32-76"><a href="#cb32-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-77"><a href="#cb32-77" aria-hidden="true" tabindex="-1"></a>media_lineas <span class="ot">&lt;-</span> tramos <span class="sc">%&gt;%</span></span>
+<span id="cb32-78"><a href="#cb32-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(linea) <span class="sc">%&gt;%</span></span>
+<span id="cb32-79"><a href="#cb32-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">media_m =</span> <span class="fu">mean</span>(distancia_m))</span>
+<span id="cb32-80"><a href="#cb32-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-81"><a href="#cb32-81" aria-hidden="true" tabindex="-1"></a>tramo_min   <span class="ot">&lt;-</span> <span class="fu">slice_min</span>(tramos, distancia_m, <span class="at">n =</span> <span class="dv">1</span>)</span>
+<span id="cb32-82"><a href="#cb32-82" aria-hidden="true" tabindex="-1"></a>tramo_max   <span class="ot">&lt;-</span> <span class="fu">slice_max</span>(tramos, distancia_m, <span class="at">n =</span> <span class="dv">1</span>)</span>
+<span id="cb32-83"><a href="#cb32-83" aria-hidden="true" tabindex="-1"></a>linea_junta <span class="ot">&lt;-</span> <span class="fu">slice_min</span>(media_lineas, media_m, <span class="at">n =</span> <span class="dv">1</span>)</span>
+<span id="cb32-84"><a href="#cb32-84" aria-hidden="true" tabindex="-1"></a>linea_lejos <span class="ot">&lt;-</span> <span class="fu">slice_max</span>(media_lineas, media_m, <span class="at">n =</span> <span class="dv">1</span>)</span>
+<span id="cb32-85"><a href="#cb32-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb32-86"><a href="#cb32-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-87"><a href="#cb32-87" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>El dataset oficial de estaciones de subte **no viene ordenado** según el recorrido de cada línea, así que calcular "la distancia entre una estación y la siguiente" no es tan directo como parece.</span>
-<span id="cb32-88"><a href="#cb32-88" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Con **sólo las distancias entre estaciones**, sin otra información, se puede reconstruir el orden: las cabeceras deberían ser el par más lejano.</span>
-<span id="cb32-89"><a href="#cb32-89" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Los atajos (ordenar por distancia a una cabecera, el vecino más cercano, PCA) funcionan en cuando la línea se mantiene relativamente recta y fallan cuando dobla o dos estaciones no consecutivas se acercan demasiado.</span>
-<span id="cb32-90"><a href="#cb32-90" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Las cabeceras no siempre son el par más lejano: en la E, Catalinas está más lejos de Plaza de los Virreyes que Retiro, la cabecera real.</span>
-<span id="cb32-91"><a href="#cb32-91" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Ordenando cada línea con el vecino más cercano desde la cabecera correcta, la distancia media entre estaciones consecutivas es de **`r num(mean(tramos$distancia_m))` m**. El tramo más corto está entre <span class="in">`r tramo_min$desde`</span> y <span class="in">`r tramo_min$hasta`</span> (línea <span class="in">`r tramo_min$linea`</span>, <span class="in">`r num(tramo_min$distancia_m)`</span> m) y el más largo entre <span class="in">`r tramo_max$desde`</span> y <span class="in">`r tramo_max$hasta`</span> (línea <span class="in">`r tramo_max$linea`</span>, <span class="in">`r num(tramo_max$distancia_m)`</span> m).</span>
-<span id="cb32-92"><a href="#cb32-92" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>El <span class="co">[</span><span class="ot">dataset de líneas</span><span class="co">](https://cdn.buenosaires.gob.ar/datosabiertos/datasets/sbase/subte-estaciones/red_subte.geojson)</span> tiene los segmentos individuales y medirlas es objetivamente la manera más sencilla resolverlo, este ejercicio busca explorar algunos algoritmos sencillos para resolver problemas geográficos.</span>
-<span id="cb32-93"><a href="#cb32-93" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb32-94"><a href="#cb32-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-97"><a href="#cb32-97" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb32-98"><a href="#cb32-98" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-zigzag</span></span>
-<span id="cb32-99"><a href="#cb32-99" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb32-100"><a href="#cb32-100" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Todas las líneas, uniendo las estaciones en el orden de las filas del dataset."</span></span>
-<span id="cb32-101"><a href="#cb32-101" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
-<span id="cb32-102"><a href="#cb32-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-103"><a href="#cb32-103" aria-hidden="true" tabindex="-1"></a>estaciones_inicio <span class="ot">&lt;-</span> <span class="fu">leer_estaciones</span>()</span>
-<span id="cb32-104"><a href="#cb32-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-105"><a href="#cb32-105" aria-hidden="true" tabindex="-1"></a>estaciones_inicio <span class="sc">%&gt;%</span></span>
-<span id="cb32-106"><a href="#cb32-106" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">st_coordinates</span>(geometry)[, <span class="dv">1</span>], <span class="at">y =</span> <span class="fu">st_coordinates</span>(geometry)[, <span class="dv">2</span>]) <span class="sc">%&gt;%</span></span>
-<span id="cb32-107"><a href="#cb32-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb32-108"><a href="#cb32-108" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y, <span class="at">color =</span> linea, <span class="at">group =</span> linea)) <span class="sc">+</span></span>
-<span id="cb32-109"><a href="#cb32-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb32-110"><a href="#cb32-110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">1.8</span>) <span class="sc">+</span></span>
-<span id="cb32-111"><a href="#cb32-111" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> COLORES_LINEAS) <span class="sc">+</span></span>
-<span id="cb32-112"><a href="#cb32-112" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
-<span id="cb32-113"><a href="#cb32-113" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">color =</span> <span class="st">"Línea"</span>) <span class="sc">+</span></span>
-<span id="cb32-114"><a href="#cb32-114" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tema_subte</span>() <span class="sc">+</span></span>
-<span id="cb32-115"><a href="#cb32-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_blank</span>(), <span class="at">legend.position =</span> <span class="st">"right"</span>)</span>
-<span id="cb32-116"><a href="#cb32-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb32-117"><a href="#cb32-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-118"><a href="#cb32-118" aria-hidden="true" tabindex="-1"></a><span class="fu">## El problema</span></span>
-<span id="cb32-119"><a href="#cb32-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-120"><a href="#cb32-120" aria-hidden="true" tabindex="-1"></a>**¿Cuál es la mejor línea de subte de la ciudad?**. </span>
-<span id="cb32-121"><a href="#cb32-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-122"><a href="#cb32-122" aria-hidden="true" tabindex="-1"></a>La respuesta es sencilla, la línea E, por muchísimos motivos que aún no están preparados para escuchar.</span>
-<span id="cb32-123"><a href="#cb32-123" aria-hidden="true" tabindex="-1"></a>Ahora bien, hay muchos puntos que podemos analizar para responder a esa pregunta de manera más o menos objetiva, y si recientemente te encontraste con una estación cerrada y decidir si caminar a la siguiente, hoy vamos a sobre complejizar cuanto en promedio te tocaría caminar.</span>
+<span id="cb32-87"><a href="#cb32-87" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
+<span id="cb32-88"><a href="#cb32-88" aria-hidden="true" tabindex="-1"></a><span class="fu">## TL;DR</span></span>
+<span id="cb32-89"><a href="#cb32-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-90"><a href="#cb32-90" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>El dataset oficial de estaciones de subte **no viene ordenado** según el recorrido de cada línea, así que calcular "la distancia entre una estación y la siguiente" no es tan directo como parece.</span>
+<span id="cb32-91"><a href="#cb32-91" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Con **sólo las distancias entre estaciones**, sin otra información, se puede reconstruir el orden: las cabeceras deberían ser el par más lejano.</span>
+<span id="cb32-92"><a href="#cb32-92" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Los atajos (ordenar por distancia a una cabecera, el vecino más cercano, PCA) funcionan en cuando la línea se mantiene relativamente recta y fallan cuando dobla o dos estaciones no consecutivas se acercan demasiado.</span>
+<span id="cb32-93"><a href="#cb32-93" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Las cabeceras no siempre son el par más lejano: en la E, Catalinas está más lejos de Plaza de los Virreyes que Retiro, la cabecera real.</span>
+<span id="cb32-94"><a href="#cb32-94" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Ordenando cada línea con el vecino más cercano desde la cabecera correcta, la distancia media entre estaciones consecutivas es de **`r num(mean(tramos$distancia_m))` m**. El tramo más corto está entre <span class="in">`r tramo_min$desde`</span> y <span class="in">`r tramo_min$hasta`</span> (línea <span class="in">`r tramo_min$linea`</span>, <span class="in">`r num(tramo_min$distancia_m)`</span> m) y el más largo entre <span class="in">`r tramo_max$desde`</span> y <span class="in">`r tramo_max$hasta`</span> (línea <span class="in">`r tramo_max$linea`</span>, <span class="in">`r num(tramo_max$distancia_m)`</span> m).</span>
+<span id="cb32-95"><a href="#cb32-95" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>El <span class="co">[</span><span class="ot">dataset de líneas</span><span class="co">](https://cdn.buenosaires.gob.ar/datosabiertos/datasets/sbase/subte-estaciones/red_subte.geojson)</span> tiene los segmentos individuales y medirlas es objetivamente la manera más sencilla resolverlo, este ejercicio busca explorar algunos algoritmos sencillos para resolver problemas geográficos.</span>
+<span id="cb32-96"><a href="#cb32-96" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb32-97"><a href="#cb32-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-100"><a href="#cb32-100" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-101"><a href="#cb32-101" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-zigzag</span></span>
+<span id="cb32-102"><a href="#cb32-102" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb32-103"><a href="#cb32-103" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Todas las líneas, uniendo las estaciones en el orden de las filas del dataset."</span></span>
+<span id="cb32-104"><a href="#cb32-104" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
+<span id="cb32-105"><a href="#cb32-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-106"><a href="#cb32-106" aria-hidden="true" tabindex="-1"></a>estaciones_inicio <span class="ot">&lt;-</span> <span class="fu">leer_estaciones</span>()</span>
+<span id="cb32-107"><a href="#cb32-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-108"><a href="#cb32-108" aria-hidden="true" tabindex="-1"></a>estaciones_inicio <span class="sc">%&gt;%</span></span>
+<span id="cb32-109"><a href="#cb32-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">st_coordinates</span>(geometry)[, <span class="dv">1</span>], <span class="at">y =</span> <span class="fu">st_coordinates</span>(geometry)[, <span class="dv">2</span>]) <span class="sc">%&gt;%</span></span>
+<span id="cb32-110"><a href="#cb32-110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb32-111"><a href="#cb32-111" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y, <span class="at">color =</span> linea, <span class="at">group =</span> linea)) <span class="sc">+</span></span>
+<span id="cb32-112"><a href="#cb32-112" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb32-113"><a href="#cb32-113" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">1.8</span>) <span class="sc">+</span></span>
+<span id="cb32-114"><a href="#cb32-114" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> COLORES_LINEAS) <span class="sc">+</span></span>
+<span id="cb32-115"><a href="#cb32-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
+<span id="cb32-116"><a href="#cb32-116" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">color =</span> <span class="st">"Línea"</span>) <span class="sc">+</span></span>
+<span id="cb32-117"><a href="#cb32-117" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tema_subte</span>() <span class="sc">+</span></span>
+<span id="cb32-118"><a href="#cb32-118" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_blank</span>(), <span class="at">legend.position =</span> <span class="st">"right"</span>)</span>
+<span id="cb32-119"><a href="#cb32-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-120"><a href="#cb32-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-121"><a href="#cb32-121" aria-hidden="true" tabindex="-1"></a><span class="fu">## El problema</span></span>
+<span id="cb32-122"><a href="#cb32-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-123"><a href="#cb32-123" aria-hidden="true" tabindex="-1"></a>**¿Cuál es la mejor línea de subte de la ciudad?**. </span>
 <span id="cb32-124"><a href="#cb32-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-125"><a href="#cb32-125" aria-hidden="true" tabindex="-1"></a> La pregunta es inocente: **¿cuál es la distancia promedio entre estaciones del subte de Buenos Aires?** La Ciudad publica <span class="co">[</span><span class="ot">un dataset con la ubicación de cada estación</span><span class="co">](https://data.buenosaires.gob.ar/dataset/subte-estaciones)</span> en Buenos Aires Data, así que debería ser cuestión de bajarlo, calcular distancias entre estaciones consecutivas y promediar.</span>
-<span id="cb32-126"><a href="#cb32-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-127"><a href="#cb32-127" aria-hidden="true" tabindex="-1"></a><span class="in">`sf::read_sf()`</span> lee el GeoJSON directo desde la URL, sin descargarlo antes:</span>
-<span id="cb32-128"><a href="#cb32-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-131"><a href="#cb32-131" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb32-132"><a href="#cb32-132" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: datos-crudos</span></span>
-<span id="cb32-133"><a href="#cb32-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-134"><a href="#cb32-134" aria-hidden="true" tabindex="-1"></a>url_estaciones <span class="ot">&lt;-</span> <span class="st">"https://cdn.buenosaires.gob.ar/datosabiertos/datasets/sbase/subte-estaciones/estaciones-de-subte.geojson"</span></span>
-<span id="cb32-135"><a href="#cb32-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-136"><a href="#cb32-136" aria-hidden="true" tabindex="-1"></a>estaciones_crudas <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(url_estaciones) <span class="sc">%&gt;%</span></span>
-<span id="cb32-137"><a href="#cb32-137" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()   <span class="co"># ID, ESTACION, LINEA -&gt; id, estacion, linea</span></span>
+<span id="cb32-125"><a href="#cb32-125" aria-hidden="true" tabindex="-1"></a>La respuesta es sencilla, la línea E, por muchísimos motivos que aún no están preparados para escuchar.</span>
+<span id="cb32-126"><a href="#cb32-126" aria-hidden="true" tabindex="-1"></a>Ahora bien, hay muchos puntos que podemos analizar para responder a esa pregunta de manera más o menos objetiva, y si recientemente te encontraste con una estación cerrada y decidir si caminar a la siguiente, hoy vamos a sobre complejizar cuanto en promedio te tocaría caminar.</span>
+<span id="cb32-127"><a href="#cb32-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-128"><a href="#cb32-128" aria-hidden="true" tabindex="-1"></a> La pregunta es inocente: **¿cuál es la distancia promedio entre estaciones del subte de Buenos Aires?** La Ciudad publica <span class="co">[</span><span class="ot">un dataset con la ubicación de cada estación</span><span class="co">](https://data.buenosaires.gob.ar/dataset/subte-estaciones)</span> en Buenos Aires Data, así que debería ser cuestión de bajarlo, calcular distancias entre estaciones consecutivas y promediar.</span>
+<span id="cb32-129"><a href="#cb32-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-130"><a href="#cb32-130" aria-hidden="true" tabindex="-1"></a><span class="in">`sf::read_sf()`</span> lee el GeoJSON directo desde la URL, sin descargarlo antes:</span>
+<span id="cb32-131"><a href="#cb32-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-134"><a href="#cb32-134" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-135"><a href="#cb32-135" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: datos-crudos</span></span>
+<span id="cb32-136"><a href="#cb32-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-137"><a href="#cb32-137" aria-hidden="true" tabindex="-1"></a>url_estaciones <span class="ot">&lt;-</span> <span class="st">"https://cdn.buenosaires.gob.ar/datosabiertos/datasets/sbase/subte-estaciones/estaciones-de-subte.geojson"</span></span>
 <span id="cb32-138"><a href="#cb32-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-139"><a href="#cb32-139" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(estaciones_crudas)</span>
-<span id="cb32-140"><a href="#cb32-140" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(estaciones_crudas)<span class="sc">$</span>input</span>
-<span id="cb32-141"><a href="#cb32-141" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb32-142"><a href="#cb32-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-143"><a href="#cb32-143" aria-hidden="true" tabindex="-1"></a>Hay un <span class="in">`id`</span>, el nombre de la estación, la línea y un punto. Para que el ejemplo sea manejable arranco con una sola línea, la **H**, y después generalizo.</span>
-<span id="cb32-144"><a href="#cb32-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-145"><a href="#cb32-145" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb32-146"><a href="#cb32-146" aria-hidden="true" tabindex="-1"></a><span class="fu">## Concepto: CRS, o por qué reproyectar antes de medir</span></span>
+<span id="cb32-139"><a href="#cb32-139" aria-hidden="true" tabindex="-1"></a>estaciones_crudas <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(url_estaciones) <span class="sc">%&gt;%</span></span>
+<span id="cb32-140"><a href="#cb32-140" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()   <span class="co"># ID, ESTACION, LINEA -&gt; id, estacion, linea</span></span>
+<span id="cb32-141"><a href="#cb32-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-142"><a href="#cb32-142" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(estaciones_crudas)</span>
+<span id="cb32-143"><a href="#cb32-143" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(estaciones_crudas)<span class="sc">$</span>input</span>
+<span id="cb32-144"><a href="#cb32-144" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-145"><a href="#cb32-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-146"><a href="#cb32-146" aria-hidden="true" tabindex="-1"></a>Hay un <span class="in">`id`</span>, el nombre de la estación, la línea y un punto. Para que el ejemplo sea manejable arranco con una sola línea, la **H**, y después generalizo.</span>
 <span id="cb32-147"><a href="#cb32-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-148"><a href="#cb32-148" aria-hidden="true" tabindex="-1"></a>Las coordenadas vienen en **WGS84** (EPSG:4326): latitud y longitud en grados. Un grado de longitud no mide lo mismo en Buenos Aires que en el ecuador, así que restar coordenadas "a mano" no da metros.</span>
-<span id="cb32-149"><a href="#cb32-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-150"><a href="#cb32-150" aria-hidden="true" tabindex="-1"></a><span class="in">`sf`</span> resuelve esto de dos maneras:</span>
-<span id="cb32-151"><a href="#cb32-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-152"><a href="#cb32-152" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Con coordenadas geográficas, <span class="in">`st_distance()`</span> usa la librería **s2** y calcula distancias sobre la esfera.</span>
-<span id="cb32-153"><a href="#cb32-153" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Con un CRS **proyectado**, las coordenadas ya están en metros y la distancia es la euclidiana de toda la vida.</span>
+<span id="cb32-148"><a href="#cb32-148" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb32-149"><a href="#cb32-149" aria-hidden="true" tabindex="-1"></a><span class="fu">## Concepto: CRS, o por qué reproyectar antes de medir</span></span>
+<span id="cb32-150"><a href="#cb32-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-151"><a href="#cb32-151" aria-hidden="true" tabindex="-1"></a>Las coordenadas vienen en **WGS84** (EPSG:4326): latitud y longitud en grados. Un grado de longitud no mide lo mismo en Buenos Aires que en el ecuador, así que restar coordenadas "a mano" no da metros.</span>
+<span id="cb32-152"><a href="#cb32-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-153"><a href="#cb32-153" aria-hidden="true" tabindex="-1"></a><span class="in">`sf`</span> resuelve esto de dos maneras:</span>
 <span id="cb32-154"><a href="#cb32-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-155"><a href="#cb32-155" aria-hidden="true" tabindex="-1"></a>Para todo el post reproyecto a **POSGAR 2007 / Argentina faja 5** (EPSG:5347), el sistema que corresponde para esta parte del país. A la escala de una ciudad, la diferencia entre ambos métodos es mínima (abajo la comparo), pero trabajar en metros simplifica todo lo que viene después, en particular PCA.</span>
-<span id="cb32-156"><a href="#cb32-156" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb32-155"><a href="#cb32-155" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Con coordenadas geográficas, <span class="in">`st_distance()`</span> usa la librería **s2** y calcula distancias sobre la esfera.</span>
+<span id="cb32-156"><a href="#cb32-156" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Con un CRS **proyectado**, las coordenadas ya están en metros y la distancia es la euclidiana de toda la vida.</span>
 <span id="cb32-157"><a href="#cb32-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-160"><a href="#cb32-160" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb32-161"><a href="#cb32-161" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: linea-h</span></span>
-<span id="cb32-162"><a href="#cb32-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-163"><a href="#cb32-163" aria-hidden="true" tabindex="-1"></a>estaciones <span class="ot">&lt;-</span> estaciones_crudas <span class="sc">%&gt;%</span></span>
-<span id="cb32-164"><a href="#cb32-164" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">5347</span>)   <span class="co"># POSGAR 2007 / Argentina faja 5, en metros</span></span>
+<span id="cb32-158"><a href="#cb32-158" aria-hidden="true" tabindex="-1"></a>Para todo el post reproyecto a **POSGAR 2007 / Argentina faja 5** (EPSG:5347), el sistema que corresponde para esta parte del país. A la escala de una ciudad, la diferencia entre ambos métodos es mínima (abajo la comparo), pero trabajar en metros simplifica todo lo que viene después, en particular PCA.</span>
+<span id="cb32-159"><a href="#cb32-159" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb32-160"><a href="#cb32-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-163"><a href="#cb32-163" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-164"><a href="#cb32-164" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: linea-h</span></span>
 <span id="cb32-165"><a href="#cb32-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-166"><a href="#cb32-166" aria-hidden="true" tabindex="-1"></a>linea_h <span class="ot">&lt;-</span> estaciones <span class="sc">%&gt;%</span></span>
-<span id="cb32-167"><a href="#cb32-167" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(linea <span class="sc">==</span> <span class="st">"H"</span>)</span>
+<span id="cb32-166"><a href="#cb32-166" aria-hidden="true" tabindex="-1"></a>estaciones <span class="ot">&lt;-</span> estaciones_crudas <span class="sc">%&gt;%</span></span>
+<span id="cb32-167"><a href="#cb32-167" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">5347</span>)   <span class="co"># POSGAR 2007 / Argentina faja 5, en metros</span></span>
 <span id="cb32-168"><a href="#cb32-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-169"><a href="#cb32-169" aria-hidden="true" tabindex="-1"></a>linea_h <span class="sc">%&gt;%</span></span>
-<span id="cb32-170"><a href="#cb32-170" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb32-171"><a href="#cb32-171" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, estacion)</span>
-<span id="cb32-172"><a href="#cb32-172" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb32-173"><a href="#cb32-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-174"><a href="#cb32-174" aria-hidden="true" tabindex="-1"></a><span class="fu">### Prueba 1: confiar en el orden del dataset</span></span>
-<span id="cb32-175"><a href="#cb32-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-176"><a href="#cb32-176" aria-hidden="true" tabindex="-1"></a>Asumo que las filas y el id replican el orden del recorrido y mido de cada una a la siguiente.</span>
-<span id="cb32-177"><a href="#cb32-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-180"><a href="#cb32-180" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb32-181"><a href="#cb32-181" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: prueba-1</span></span>
-<span id="cb32-182"><a href="#cb32-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-183"><a href="#cb32-183" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(linea_h)</span>
-<span id="cb32-184"><a href="#cb32-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-185"><a href="#cb32-185" aria-hidden="true" tabindex="-1"></a>dist_ingenua <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(</span>
-<span id="cb32-186"><a href="#cb32-186" aria-hidden="true" tabindex="-1"></a>  linea_h<span class="sc">$</span>geometry[<span class="sc">-</span>n],</span>
-<span id="cb32-187"><a href="#cb32-187" aria-hidden="true" tabindex="-1"></a>  linea_h<span class="sc">$</span>geometry[<span class="sc">-</span><span class="dv">1</span>],</span>
-<span id="cb32-188"><a href="#cb32-188" aria-hidden="true" tabindex="-1"></a>  <span class="at">by_element =</span> <span class="cn">TRUE</span></span>
-<span id="cb32-189"><a href="#cb32-189" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb32-190"><a href="#cb32-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-191"><a href="#cb32-191" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(dist_ingenua)</span>
-<span id="cb32-192"><a href="#cb32-192" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(dist_ingenua)</span>
-<span id="cb32-193"><a href="#cb32-193" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb32-194"><a href="#cb32-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-195"><a href="#cb32-195" aria-hidden="true" tabindex="-1"></a>Dibujarlo es la forma más rápida de saber si el número tiene sentido: uno las estaciones en el orden en que aparecen en la tabla.</span>
-<span id="cb32-196"><a href="#cb32-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-199"><a href="#cb32-199" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb32-200"><a href="#cb32-200" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-prueba-1</span></span>
-<span id="cb32-201"><a href="#cb32-201" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Línea H, uniendo las estaciones en el orden de las filas del dataset."</span></span>
-<span id="cb32-202"><a href="#cb32-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-203"><a href="#cb32-203" aria-hidden="true" tabindex="-1"></a><span class="fu">mapa_orden</span>(linea_h, <span class="st">"Prueba 1: el orden del dataset"</span>, <span class="at">etiqueta =</span> <span class="st">"estacion"</span>)</span>
-<span id="cb32-204"><a href="#cb32-204" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-169"><a href="#cb32-169" aria-hidden="true" tabindex="-1"></a>linea_h <span class="ot">&lt;-</span> estaciones <span class="sc">%&gt;%</span></span>
+<span id="cb32-170"><a href="#cb32-170" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(linea <span class="sc">==</span> <span class="st">"H"</span>)</span>
+<span id="cb32-171"><a href="#cb32-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-172"><a href="#cb32-172" aria-hidden="true" tabindex="-1"></a>linea_h <span class="sc">%&gt;%</span></span>
+<span id="cb32-173"><a href="#cb32-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb32-174"><a href="#cb32-174" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, estacion)</span>
+<span id="cb32-175"><a href="#cb32-175" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-176"><a href="#cb32-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-177"><a href="#cb32-177" aria-hidden="true" tabindex="-1"></a><span class="fu">### Prueba 1: confiar en el orden del dataset</span></span>
+<span id="cb32-178"><a href="#cb32-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-179"><a href="#cb32-179" aria-hidden="true" tabindex="-1"></a>Asumo que las filas y el id replican el orden del recorrido y mido de cada una a la siguiente.</span>
+<span id="cb32-180"><a href="#cb32-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-183"><a href="#cb32-183" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-184"><a href="#cb32-184" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: prueba-1</span></span>
+<span id="cb32-185"><a href="#cb32-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-186"><a href="#cb32-186" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(linea_h)</span>
+<span id="cb32-187"><a href="#cb32-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-188"><a href="#cb32-188" aria-hidden="true" tabindex="-1"></a>dist_ingenua <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(</span>
+<span id="cb32-189"><a href="#cb32-189" aria-hidden="true" tabindex="-1"></a>  linea_h<span class="sc">$</span>geometry[<span class="sc">-</span>n],</span>
+<span id="cb32-190"><a href="#cb32-190" aria-hidden="true" tabindex="-1"></a>  linea_h<span class="sc">$</span>geometry[<span class="sc">-</span><span class="dv">1</span>],</span>
+<span id="cb32-191"><a href="#cb32-191" aria-hidden="true" tabindex="-1"></a>  <span class="at">by_element =</span> <span class="cn">TRUE</span></span>
+<span id="cb32-192"><a href="#cb32-192" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb32-193"><a href="#cb32-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-194"><a href="#cb32-194" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(dist_ingenua)</span>
+<span id="cb32-195"><a href="#cb32-195" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(dist_ingenua)</span>
+<span id="cb32-196"><a href="#cb32-196" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-197"><a href="#cb32-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-198"><a href="#cb32-198" aria-hidden="true" tabindex="-1"></a>Dibujarlo es la forma más rápida de saber si el número tiene sentido: uno las estaciones en el orden en que aparecen en la tabla.</span>
+<span id="cb32-199"><a href="#cb32-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-202"><a href="#cb32-202" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-203"><a href="#cb32-203" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-prueba-1</span></span>
+<span id="cb32-204"><a href="#cb32-204" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Línea H, uniendo las estaciones en el orden de las filas del dataset."</span></span>
 <span id="cb32-205"><a href="#cb32-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-206"><a href="#cb32-206" aria-hidden="true" tabindex="-1"></a>**El `id` no sigue el recorrido**, así que el promedio "ingenuo" mezcla saltos entre estaciones que no son vecinas. Y si bien hubiese sido una gran adición para [Accidental aRt](https://accidental-art.tumblr.com/), (que descanse en paz), **antes de medir, tendremos que ordenar**.</span>
-<span id="cb32-207"><a href="#cb32-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-208"><a href="#cb32-208" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
-<span id="cb32-209"><a href="#cb32-209" aria-hidden="true" tabindex="-1"></a><span class="fu">## De paso: ¿cuánto cambia medir en grados vs en metros?</span></span>
+<span id="cb32-206"><a href="#cb32-206" aria-hidden="true" tabindex="-1"></a><span class="fu">mapa_orden</span>(linea_h, <span class="st">"Prueba 1: el orden del dataset"</span>, <span class="at">etiqueta =</span> <span class="st">"estacion"</span>)</span>
+<span id="cb32-207"><a href="#cb32-207" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-208"><a href="#cb32-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-209"><a href="#cb32-209" aria-hidden="true" tabindex="-1"></a>**El `id` no sigue el recorrido**, así que el promedio "ingenuo" mezcla saltos entre estaciones que no son vecinas. Y si bien hubiese sido una gran adición para [Accidental aRt](https://accidental-art.tumblr.com/), (que descanse en paz), **antes de medir, tendremos que ordenar**.</span>
 <span id="cb32-210"><a href="#cb32-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-213"><a href="#cb32-213" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb32-214"><a href="#cb32-214" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: s2-vs-proyectado</span></span>
-<span id="cb32-215"><a href="#cb32-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-216"><a href="#cb32-216" aria-hidden="true" tabindex="-1"></a>linea_h_wgs84 <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(linea_h, <span class="dv">4326</span>)</span>
-<span id="cb32-217"><a href="#cb32-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-218"><a href="#cb32-218" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb32-219"><a href="#cb32-219" aria-hidden="true" tabindex="-1"></a>  <span class="at">esfera_s2  =</span> <span class="fu">sum</span>(<span class="fu">st_distance</span>(linea_h_wgs84<span class="sc">$</span>geometry[<span class="sc">-</span>n], linea_h_wgs84<span class="sc">$</span>geometry[<span class="sc">-</span><span class="dv">1</span>], <span class="at">by_element =</span> <span class="cn">TRUE</span>)),</span>
-<span id="cb32-220"><a href="#cb32-220" aria-hidden="true" tabindex="-1"></a>  <span class="at">plano_5347 =</span> <span class="fu">sum</span>(dist_ingenua)</span>
-<span id="cb32-221"><a href="#cb32-221" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb32-222"><a href="#cb32-222" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diferencia_pct =</span> <span class="fu">as.numeric</span>((plano_5347 <span class="sc">-</span> esfera_s2) <span class="sc">/</span> esfera_s2 <span class="sc">*</span> <span class="dv">100</span>))</span>
-<span id="cb32-223"><a href="#cb32-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb32-224"><a href="#cb32-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-225"><a href="#cb32-225" aria-hidden="true" tabindex="-1"></a>A esta escala, si bien todavía la distancia no es la real (ya quisiéramos, es la mitad), la diferencia es despreciable.</span>
-<span id="cb32-226"><a href="#cb32-226" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb32-211"><a href="#cb32-211" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
+<span id="cb32-212"><a href="#cb32-212" aria-hidden="true" tabindex="-1"></a><span class="fu">## De paso: ¿cuánto cambia medir en grados vs en metros?</span></span>
+<span id="cb32-213"><a href="#cb32-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-216"><a href="#cb32-216" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-217"><a href="#cb32-217" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: s2-vs-proyectado</span></span>
+<span id="cb32-218"><a href="#cb32-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-219"><a href="#cb32-219" aria-hidden="true" tabindex="-1"></a>linea_h_wgs84 <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(linea_h, <span class="dv">4326</span>)</span>
+<span id="cb32-220"><a href="#cb32-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-221"><a href="#cb32-221" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb32-222"><a href="#cb32-222" aria-hidden="true" tabindex="-1"></a>  <span class="at">esfera_s2  =</span> <span class="fu">sum</span>(<span class="fu">st_distance</span>(linea_h_wgs84<span class="sc">$</span>geometry[<span class="sc">-</span>n], linea_h_wgs84<span class="sc">$</span>geometry[<span class="sc">-</span><span class="dv">1</span>], <span class="at">by_element =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb32-223"><a href="#cb32-223" aria-hidden="true" tabindex="-1"></a>  <span class="at">plano_5347 =</span> <span class="fu">sum</span>(dist_ingenua)</span>
+<span id="cb32-224"><a href="#cb32-224" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb32-225"><a href="#cb32-225" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diferencia_pct =</span> <span class="fu">as.numeric</span>((plano_5347 <span class="sc">-</span> esfera_s2) <span class="sc">/</span> esfera_s2 <span class="sc">*</span> <span class="dv">100</span>))</span>
+<span id="cb32-226"><a href="#cb32-226" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb32-227"><a href="#cb32-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-228"><a href="#cb32-228" aria-hidden="true" tabindex="-1"></a><span class="fu">## Primera idea: las cabeceras</span></span>
-<span id="cb32-229"><a href="#cb32-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-230"><a href="#cb32-230" aria-hidden="true" tabindex="-1"></a>Si no tengo el orden, ¿qué tengo? Las **distancias entre todas las estaciones**. Y hay algo que esas distancias tienen que cumplir en cualquier línea más o menos recta: **las dos estaciones más lejanas entre sí son las puntas**.</span>
-<span id="cb32-231"><a href="#cb32-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-232"><a href="#cb32-232" aria-hidden="true" tabindex="-1"></a><span class="fu">### Prueba 2: el máximo de la matriz de distancias</span></span>
-<span id="cb32-233"><a href="#cb32-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-236"><a href="#cb32-236" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb32-237"><a href="#cb32-237" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: prueba-2-matriz</span></span>
-<span id="cb32-238"><a href="#cb32-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-239"><a href="#cb32-239" aria-hidden="true" tabindex="-1"></a>distancias <span class="ot">&lt;-</span> units<span class="sc">::</span><span class="fu">drop_units</span>(<span class="fu">st_distance</span>(linea_h))</span>
-<span id="cb32-240"><a href="#cb32-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-241"><a href="#cb32-241" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(distancias)</span>
-<span id="cb32-242"><a href="#cb32-242" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(distancias[<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>])</span>
-<span id="cb32-243"><a href="#cb32-243" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb32-244"><a href="#cb32-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-245"><a href="#cb32-245" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb32-246"><a href="#cb32-246" aria-hidden="true" tabindex="-1"></a><span class="fu">## Concepto: la matriz de distancias</span></span>
+<span id="cb32-228"><a href="#cb32-228" aria-hidden="true" tabindex="-1"></a>A esta escala, si bien todavía la distancia no es la real (ya quisiéramos, es la mitad), la diferencia es despreciable.</span>
+<span id="cb32-229"><a href="#cb32-229" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb32-230"><a href="#cb32-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-231"><a href="#cb32-231" aria-hidden="true" tabindex="-1"></a><span class="fu">## Primera idea: las cabeceras</span></span>
+<span id="cb32-232"><a href="#cb32-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-233"><a href="#cb32-233" aria-hidden="true" tabindex="-1"></a>Si no tengo el orden, ¿qué tengo? Las **distancias entre todas las estaciones**. Y hay algo que esas distancias tienen que cumplir en cualquier línea más o menos recta: **las dos estaciones más lejanas entre sí son las puntas**.</span>
+<span id="cb32-234"><a href="#cb32-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-235"><a href="#cb32-235" aria-hidden="true" tabindex="-1"></a><span class="fu">### Prueba 2: el máximo de la matriz de distancias</span></span>
+<span id="cb32-236"><a href="#cb32-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-239"><a href="#cb32-239" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-240"><a href="#cb32-240" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: prueba-2-matriz</span></span>
+<span id="cb32-241"><a href="#cb32-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-242"><a href="#cb32-242" aria-hidden="true" tabindex="-1"></a>distancias <span class="ot">&lt;-</span> units<span class="sc">::</span><span class="fu">drop_units</span>(<span class="fu">st_distance</span>(linea_h))</span>
+<span id="cb32-243"><a href="#cb32-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-244"><a href="#cb32-244" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(distancias)</span>
+<span id="cb32-245"><a href="#cb32-245" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(distancias[<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>])</span>
+<span id="cb32-246"><a href="#cb32-246" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb32-247"><a href="#cb32-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-248"><a href="#cb32-248" aria-hidden="true" tabindex="-1"></a><span class="in">`st_distance(x)`</span> con un solo argumento devuelve una matriz de $n \times n$ donde la celda $(i, j)$ es la distancia entre la estación $i$ y la $j$. Tiene dos propiedades que conviene tener presentes:</span>
-<span id="cb32-249"><a href="#cb32-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-250"><a href="#cb32-250" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Diagonal en cero**: la distancia de una estación a sí misma.</span>
-<span id="cb32-251"><a href="#cb32-251" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Simetría**: $d(i, j) = d(j, i)$. Toda la información está en el triángulo superior (o en el inferior).</span>
+<span id="cb32-248"><a href="#cb32-248" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb32-249"><a href="#cb32-249" aria-hidden="true" tabindex="-1"></a><span class="fu">## Concepto: la matriz de distancias</span></span>
+<span id="cb32-250"><a href="#cb32-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-251"><a href="#cb32-251" aria-hidden="true" tabindex="-1"></a><span class="in">`st_distance(x)`</span> con un solo argumento devuelve una matriz de $n \times n$ donde la celda $(i, j)$ es la distancia entre la estación $i$ y la $j$. Tiene dos propiedades que conviene tener presentes:</span>
 <span id="cb32-252"><a href="#cb32-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-253"><a href="#cb32-253" aria-hidden="true" tabindex="-1"></a>La simetría tiene una consecuencia práctica inmediata, como se ve en la próxima prueba.</span>
-<span id="cb32-254"><a href="#cb32-254" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb32-253"><a href="#cb32-253" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Diagonal en cero**: la distancia de una estación a sí misma.</span>
+<span id="cb32-254"><a href="#cb32-254" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Simetría**: $d(i, j) = d(j, i)$. Toda la información está en el triángulo superior (o en el inferior).</span>
 <span id="cb32-255"><a href="#cb32-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-258"><a href="#cb32-258" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb32-259"><a href="#cb32-259" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: prueba-2-maximo</span></span>
-<span id="cb32-260"><a href="#cb32-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-261"><a href="#cb32-261" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(distancias <span class="sc">==</span> <span class="fu">max</span>(distancias), <span class="at">arr.ind =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb32-262"><a href="#cb32-262" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-256"><a href="#cb32-256" aria-hidden="true" tabindex="-1"></a>La simetría tiene una consecuencia práctica inmediata, como se ve en la próxima prueba.</span>
+<span id="cb32-257"><a href="#cb32-257" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb32-258"><a href="#cb32-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-261"><a href="#cb32-261" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-262"><a href="#cb32-262" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: prueba-2-maximo</span></span>
 <span id="cb32-263"><a href="#cb32-263" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-264"><a href="#cb32-264" aria-hidden="true" tabindex="-1"></a>Aparecen **dos filas**, porque el máximo está una vez en $(i, j)$ y otra en $(j, i)$. Los dos índices de una de esas filas son las dos cabeceras.</span>
-<span id="cb32-265"><a href="#cb32-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-268"><a href="#cb32-268" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb32-269"><a href="#cb32-269" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: prueba-2-cabeceras</span></span>
-<span id="cb32-270"><a href="#cb32-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-271"><a href="#cb32-271" aria-hidden="true" tabindex="-1"></a>indices_cabeceras <span class="ot">&lt;-</span> <span class="fu">which</span>(distancias <span class="sc">==</span> <span class="fu">max</span>(distancias), <span class="at">arr.ind =</span> <span class="cn">TRUE</span>)[<span class="dv">1</span>, ]</span>
-<span id="cb32-272"><a href="#cb32-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-273"><a href="#cb32-273" aria-hidden="true" tabindex="-1"></a>linea_h <span class="sc">%&gt;%</span></span>
-<span id="cb32-274"><a href="#cb32-274" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(indices_cabeceras)</span>
-<span id="cb32-275"><a href="#cb32-275" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb32-276"><a href="#cb32-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-277"><a href="#cb32-277" aria-hidden="true" tabindex="-1"></a>**Funciona.** Facultad de Derecho y Hospitales son las cabeceras de la H. Con las puntas identificadas, falta ordenar las del medio.</span>
-<span id="cb32-278"><a href="#cb32-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-279"><a href="#cb32-279" aria-hidden="true" tabindex="-1"></a><span class="fu">## ¿Y las del medio?</span></span>
-<span id="cb32-280"><a href="#cb32-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-281"><a href="#cb32-281" aria-hidden="true" tabindex="-1"></a><span class="fu">### Prueba 3: ordenar por distancia a una cabecera</span></span>
-<span id="cb32-282"><a href="#cb32-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-283"><a href="#cb32-283" aria-hidden="true" tabindex="-1"></a>La idea más simple que se me ocurre es ordenar todas las estaciones según qué tan lejos están de una cabecera: la más cercana va segunda, la que sigue tercera, etc.</span>
-<span id="cb32-284"><a href="#cb32-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-287"><a href="#cb32-287" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb32-288"><a href="#cb32-288" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: prueba-3</span></span>
-<span id="cb32-289"><a href="#cb32-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-290"><a href="#cb32-290" aria-hidden="true" tabindex="-1"></a>inicio <span class="ot">&lt;-</span> indices_cabeceras[<span class="dv">2</span>]   <span class="co"># Hospitales: recorro de sur a norte</span></span>
-<span id="cb32-291"><a href="#cb32-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-292"><a href="#cb32-292" aria-hidden="true" tabindex="-1"></a>linea_h_p3 <span class="ot">&lt;-</span> linea_h <span class="sc">%&gt;%</span></span>
-<span id="cb32-293"><a href="#cb32-293" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">order</span>(distancias[inicio, ]))</span>
-<span id="cb32-294"><a href="#cb32-294" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb32-295"><a href="#cb32-295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-298"><a href="#cb32-298" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb32-299"><a href="#cb32-299" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-prueba-3</span></span>
-<span id="cb32-300"><a href="#cb32-300" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Prueba 3: ordenar por distancia a una cabecera."</span></span>
-<span id="cb32-301"><a href="#cb32-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-302"><a href="#cb32-302" aria-hidden="true" tabindex="-1"></a><span class="fu">mapa_orden</span>(linea_h_p3, <span class="st">"Prueba 3: distancia a una cabecera"</span>, <span class="at">etiqueta =</span> <span class="st">"estacion"</span>)</span>
-<span id="cb32-303"><a href="#cb32-303" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-264"><a href="#cb32-264" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(distancias <span class="sc">==</span> <span class="fu">max</span>(distancias), <span class="at">arr.ind =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb32-265"><a href="#cb32-265" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-266"><a href="#cb32-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-267"><a href="#cb32-267" aria-hidden="true" tabindex="-1"></a>Aparecen **dos filas**, porque el máximo está una vez en $(i, j)$ y otra en $(j, i)$. Los dos índices de una de esas filas son las dos cabeceras.</span>
+<span id="cb32-268"><a href="#cb32-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-271"><a href="#cb32-271" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-272"><a href="#cb32-272" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: prueba-2-cabeceras</span></span>
+<span id="cb32-273"><a href="#cb32-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-274"><a href="#cb32-274" aria-hidden="true" tabindex="-1"></a>indices_cabeceras <span class="ot">&lt;-</span> <span class="fu">which</span>(distancias <span class="sc">==</span> <span class="fu">max</span>(distancias), <span class="at">arr.ind =</span> <span class="cn">TRUE</span>)[<span class="dv">1</span>, ]</span>
+<span id="cb32-275"><a href="#cb32-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-276"><a href="#cb32-276" aria-hidden="true" tabindex="-1"></a>linea_h <span class="sc">%&gt;%</span></span>
+<span id="cb32-277"><a href="#cb32-277" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(indices_cabeceras)</span>
+<span id="cb32-278"><a href="#cb32-278" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-279"><a href="#cb32-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-280"><a href="#cb32-280" aria-hidden="true" tabindex="-1"></a>**Funciona.** Facultad de Derecho y Hospitales son las cabeceras de la H. Con las puntas identificadas, falta ordenar las del medio.</span>
+<span id="cb32-281"><a href="#cb32-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-282"><a href="#cb32-282" aria-hidden="true" tabindex="-1"></a><span class="fu">## ¿Y las del medio?</span></span>
+<span id="cb32-283"><a href="#cb32-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-284"><a href="#cb32-284" aria-hidden="true" tabindex="-1"></a><span class="fu">### Prueba 3: ordenar por distancia a una cabecera</span></span>
+<span id="cb32-285"><a href="#cb32-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-286"><a href="#cb32-286" aria-hidden="true" tabindex="-1"></a>La idea más simple que se me ocurre es ordenar todas las estaciones según qué tan lejos están de una cabecera: la más cercana va segunda, la que sigue tercera, etc.</span>
+<span id="cb32-287"><a href="#cb32-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-290"><a href="#cb32-290" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-291"><a href="#cb32-291" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: prueba-3</span></span>
+<span id="cb32-292"><a href="#cb32-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-293"><a href="#cb32-293" aria-hidden="true" tabindex="-1"></a>inicio <span class="ot">&lt;-</span> indices_cabeceras[<span class="dv">2</span>]   <span class="co"># Hospitales: recorro de sur a norte</span></span>
+<span id="cb32-294"><a href="#cb32-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-295"><a href="#cb32-295" aria-hidden="true" tabindex="-1"></a>linea_h_p3 <span class="ot">&lt;-</span> linea_h <span class="sc">%&gt;%</span></span>
+<span id="cb32-296"><a href="#cb32-296" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">order</span>(distancias[inicio, ]))</span>
+<span id="cb32-297"><a href="#cb32-297" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-298"><a href="#cb32-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-301"><a href="#cb32-301" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-302"><a href="#cb32-302" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-prueba-3</span></span>
+<span id="cb32-303"><a href="#cb32-303" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Prueba 3: ordenar por distancia a una cabecera."</span></span>
 <span id="cb32-304"><a href="#cb32-304" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-305"><a href="#cb32-305" aria-hidden="true" tabindex="-1"></a>**Funciona!** En un tramo relativamente recto anda perfecto, útil para las líneas de la Ciudad. Pero la distancia a la cabecera es una distancia **en línea recta**, y si dos estaciones intermedias no consecutivas se acercaran, por ejemplo debido a una curva muy pronunciada, produciría resultados erróneos.</span>
-<span id="cb32-306"><a href="#cb32-306" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-307"><a href="#cb32-307" aria-hidden="true" tabindex="-1"></a><span class="fu">### Prueba 4: el vecino más cercano</span></span>
-<span id="cb32-308"><a href="#cb32-308" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-309"><a href="#cb32-309" aria-hidden="true" tabindex="-1"></a>En lugar de mirar siempre la cabecera, avanzo **paso a paso**: desde la estación actual, voy a la más cercana que todavía no visité.</span>
-<span id="cb32-310"><a href="#cb32-310" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-313"><a href="#cb32-313" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb32-314"><a href="#cb32-314" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: prueba-4</span></span>
-<span id="cb32-315"><a href="#cb32-315" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-316"><a href="#cb32-316" aria-hidden="true" tabindex="-1"></a>recorrido <span class="ot">&lt;-</span> inicio</span>
-<span id="cb32-317"><a href="#cb32-317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-318"><a href="#cb32-318" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (paso <span class="cf">in</span> <span class="fu">seq_len</span>(n <span class="sc">-</span> <span class="dv">1</span>)) {</span>
-<span id="cb32-319"><a href="#cb32-319" aria-hidden="true" tabindex="-1"></a>  actual     <span class="ot">&lt;-</span> recorrido[<span class="fu">length</span>(recorrido)]</span>
-<span id="cb32-320"><a href="#cb32-320" aria-hidden="true" tabindex="-1"></a>  candidatos <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">seq_len</span>(n), recorrido)</span>
-<span id="cb32-321"><a href="#cb32-321" aria-hidden="true" tabindex="-1"></a>  siguiente  <span class="ot">&lt;-</span> candidatos[<span class="fu">which.min</span>(distancias[actual, candidatos])]</span>
-<span id="cb32-322"><a href="#cb32-322" aria-hidden="true" tabindex="-1"></a>  recorrido  <span class="ot">&lt;-</span> <span class="fu">c</span>(recorrido, siguiente)</span>
-<span id="cb32-323"><a href="#cb32-323" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb32-324"><a href="#cb32-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-325"><a href="#cb32-325" aria-hidden="true" tabindex="-1"></a>linea_h_p4 <span class="ot">&lt;-</span> <span class="fu">slice</span>(linea_h, recorrido)</span>
-<span id="cb32-326"><a href="#cb32-326" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-305"><a href="#cb32-305" aria-hidden="true" tabindex="-1"></a><span class="fu">mapa_orden</span>(linea_h_p3, <span class="st">"Prueba 3: distancia a una cabecera"</span>, <span class="at">etiqueta =</span> <span class="st">"estacion"</span>)</span>
+<span id="cb32-306"><a href="#cb32-306" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-307"><a href="#cb32-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-308"><a href="#cb32-308" aria-hidden="true" tabindex="-1"></a>**Funciona!** En un tramo relativamente recto anda perfecto, útil para las líneas de la Ciudad. Pero la distancia a la cabecera es una distancia **en línea recta**, y si dos estaciones intermedias no consecutivas se acercaran, por ejemplo debido a una curva muy pronunciada, produciría resultados erróneos.</span>
+<span id="cb32-309"><a href="#cb32-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-310"><a href="#cb32-310" aria-hidden="true" tabindex="-1"></a><span class="fu">### Prueba 4: el vecino más cercano</span></span>
+<span id="cb32-311"><a href="#cb32-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-312"><a href="#cb32-312" aria-hidden="true" tabindex="-1"></a>En lugar de mirar siempre la cabecera, avanzo **paso a paso**: desde la estación actual, voy a la más cercana que todavía no visité.</span>
+<span id="cb32-313"><a href="#cb32-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-316"><a href="#cb32-316" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-317"><a href="#cb32-317" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: prueba-4</span></span>
+<span id="cb32-318"><a href="#cb32-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-319"><a href="#cb32-319" aria-hidden="true" tabindex="-1"></a>recorrido <span class="ot">&lt;-</span> inicio</span>
+<span id="cb32-320"><a href="#cb32-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-321"><a href="#cb32-321" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (paso <span class="cf">in</span> <span class="fu">seq_len</span>(n <span class="sc">-</span> <span class="dv">1</span>)) {</span>
+<span id="cb32-322"><a href="#cb32-322" aria-hidden="true" tabindex="-1"></a>  actual     <span class="ot">&lt;-</span> recorrido[<span class="fu">length</span>(recorrido)]</span>
+<span id="cb32-323"><a href="#cb32-323" aria-hidden="true" tabindex="-1"></a>  candidatos <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">seq_len</span>(n), recorrido)</span>
+<span id="cb32-324"><a href="#cb32-324" aria-hidden="true" tabindex="-1"></a>  siguiente  <span class="ot">&lt;-</span> candidatos[<span class="fu">which.min</span>(distancias[actual, candidatos])]</span>
+<span id="cb32-325"><a href="#cb32-325" aria-hidden="true" tabindex="-1"></a>  recorrido  <span class="ot">&lt;-</span> <span class="fu">c</span>(recorrido, siguiente)</span>
+<span id="cb32-326"><a href="#cb32-326" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb32-327"><a href="#cb32-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-330"><a href="#cb32-330" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb32-331"><a href="#cb32-331" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-prueba-4</span></span>
-<span id="cb32-332"><a href="#cb32-332" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Prueba 4: vecino más cercano desde una cabecera."</span></span>
-<span id="cb32-333"><a href="#cb32-333" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-334"><a href="#cb32-334" aria-hidden="true" tabindex="-1"></a><span class="fu">mapa_orden</span>(linea_h_p4, <span class="st">"Prueba 4: vecino más cercano"</span>, <span class="at">etiqueta =</span> <span class="st">"estacion"</span>)</span>
-<span id="cb32-335"><a href="#cb32-335" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-328"><a href="#cb32-328" aria-hidden="true" tabindex="-1"></a>linea_h_p4 <span class="ot">&lt;-</span> <span class="fu">slice</span>(linea_h, recorrido)</span>
+<span id="cb32-329"><a href="#cb32-329" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-330"><a href="#cb32-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-333"><a href="#cb32-333" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-334"><a href="#cb32-334" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-prueba-4</span></span>
+<span id="cb32-335"><a href="#cb32-335" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Prueba 4: vecino más cercano desde una cabecera."</span></span>
 <span id="cb32-336"><a href="#cb32-336" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-337"><a href="#cb32-337" aria-hidden="true" tabindex="-1"></a>**Es más robusto**, porque cada decisión es local. Pero es un algoritmo **greedy** (goloso) que nunca vuelve atrás. Si en algún paso dos estaciones están casi a la misma distancia y elige "mal", puede saltearse una y tener que volver a buscarla al final, con un salto largo.</span>
-<span id="cb32-338"><a href="#cb32-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-341"><a href="#cb32-341" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb32-342"><a href="#cb32-342" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: animar-vecino</span></span>
-<span id="cb32-343"><a href="#cb32-343" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb32-344"><a href="#cb32-344" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-345"><a href="#cb32-345" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gganimate)</span>
-<span id="cb32-346"><a href="#cb32-346" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-347"><a href="#cb32-347" aria-hidden="true" tabindex="-1"></a>animar_vecino <span class="ot">&lt;-</span> <span class="cf">function</span>(datos, inicio, titulo, <span class="at">ficticias =</span> <span class="fu">integer</span>(<span class="dv">0</span>)) {</span>
-<span id="cb32-348"><a href="#cb32-348" aria-hidden="true" tabindex="-1"></a>  dist  <span class="ot">&lt;-</span> units<span class="sc">::</span><span class="fu">drop_units</span>(<span class="fu">st_distance</span>(datos))</span>
-<span id="cb32-349"><a href="#cb32-349" aria-hidden="true" tabindex="-1"></a>  n     <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos)</span>
-<span id="cb32-350"><a href="#cb32-350" aria-hidden="true" tabindex="-1"></a>  color <span class="ot">&lt;-</span> COLORES_LINEAS[datos<span class="sc">$</span>linea[<span class="dv">1</span>]]</span>
-<span id="cb32-351"><a href="#cb32-351" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-352"><a href="#cb32-352" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Vecino más cercano, igual que arriba</span></span>
-<span id="cb32-353"><a href="#cb32-353" aria-hidden="true" tabindex="-1"></a>  rec <span class="ot">&lt;-</span> inicio</span>
-<span id="cb32-354"><a href="#cb32-354" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (paso <span class="cf">in</span> <span class="fu">seq_len</span>(n <span class="sc">-</span> <span class="dv">1</span>)) {</span>
-<span id="cb32-355"><a href="#cb32-355" aria-hidden="true" tabindex="-1"></a>    actual     <span class="ot">&lt;-</span> rec[<span class="fu">length</span>(rec)]</span>
-<span id="cb32-356"><a href="#cb32-356" aria-hidden="true" tabindex="-1"></a>    candidatos <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">seq_len</span>(n), rec)</span>
-<span id="cb32-357"><a href="#cb32-357" aria-hidden="true" tabindex="-1"></a>    rec        <span class="ot">&lt;-</span> <span class="fu">c</span>(rec, candidatos[<span class="fu">which.min</span>(dist[actual, candidatos])])</span>
-<span id="cb32-358"><a href="#cb32-358" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb32-359"><a href="#cb32-359" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-360"><a href="#cb32-360" aria-hidden="true" tabindex="-1"></a>  xy <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(<span class="fu">st_coordinates</span>(datos)) <span class="sc">%&gt;%</span></span>
-<span id="cb32-361"><a href="#cb32-361" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">i =</span> <span class="fu">row_number</span>(), <span class="at">ficticia =</span> i <span class="sc">%in%</span> ficticias)</span>
+<span id="cb32-337"><a href="#cb32-337" aria-hidden="true" tabindex="-1"></a><span class="fu">mapa_orden</span>(linea_h_p4, <span class="st">"Prueba 4: vecino más cercano"</span>, <span class="at">etiqueta =</span> <span class="st">"estacion"</span>)</span>
+<span id="cb32-338"><a href="#cb32-338" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-339"><a href="#cb32-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-340"><a href="#cb32-340" aria-hidden="true" tabindex="-1"></a>**Es más robusto**, porque cada decisión es local. Pero es un algoritmo **greedy** (goloso) que nunca vuelve atrás. Si en algún paso dos estaciones están casi a la misma distancia y elige "mal", puede saltearse una y tener que volver a buscarla al final, con un salto largo.</span>
+<span id="cb32-341"><a href="#cb32-341" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-344"><a href="#cb32-344" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-345"><a href="#cb32-345" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: animar-vecino</span></span>
+<span id="cb32-346"><a href="#cb32-346" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb32-347"><a href="#cb32-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-348"><a href="#cb32-348" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gganimate)</span>
+<span id="cb32-349"><a href="#cb32-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-350"><a href="#cb32-350" aria-hidden="true" tabindex="-1"></a>animar_vecino <span class="ot">&lt;-</span> <span class="cf">function</span>(datos, inicio, titulo, <span class="at">ficticias =</span> <span class="fu">integer</span>(<span class="dv">0</span>)) {</span>
+<span id="cb32-351"><a href="#cb32-351" aria-hidden="true" tabindex="-1"></a>  dist  <span class="ot">&lt;-</span> units<span class="sc">::</span><span class="fu">drop_units</span>(<span class="fu">st_distance</span>(datos))</span>
+<span id="cb32-352"><a href="#cb32-352" aria-hidden="true" tabindex="-1"></a>  n     <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos)</span>
+<span id="cb32-353"><a href="#cb32-353" aria-hidden="true" tabindex="-1"></a>  color <span class="ot">&lt;-</span> COLORES_LINEAS[datos<span class="sc">$</span>linea[<span class="dv">1</span>]]</span>
+<span id="cb32-354"><a href="#cb32-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-355"><a href="#cb32-355" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Vecino más cercano, igual que arriba</span></span>
+<span id="cb32-356"><a href="#cb32-356" aria-hidden="true" tabindex="-1"></a>  rec <span class="ot">&lt;-</span> inicio</span>
+<span id="cb32-357"><a href="#cb32-357" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (paso <span class="cf">in</span> <span class="fu">seq_len</span>(n <span class="sc">-</span> <span class="dv">1</span>)) {</span>
+<span id="cb32-358"><a href="#cb32-358" aria-hidden="true" tabindex="-1"></a>    actual     <span class="ot">&lt;-</span> rec[<span class="fu">length</span>(rec)]</span>
+<span id="cb32-359"><a href="#cb32-359" aria-hidden="true" tabindex="-1"></a>    candidatos <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">seq_len</span>(n), rec)</span>
+<span id="cb32-360"><a href="#cb32-360" aria-hidden="true" tabindex="-1"></a>    rec        <span class="ot">&lt;-</span> <span class="fu">c</span>(rec, candidatos[<span class="fu">which.min</span>(dist[actual, candidatos])])</span>
+<span id="cb32-361"><a href="#cb32-361" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb32-362"><a href="#cb32-362" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-363"><a href="#cb32-363" aria-hidden="true" tabindex="-1"></a>  candidatos_df <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="fu">seq_len</span>(n <span class="sc">-</span> <span class="dv">1</span>), \(k) {</span>
-<span id="cb32-364"><a href="#cb32-364" aria-hidden="true" tabindex="-1"></a>    actual     <span class="ot">&lt;-</span> rec[k]</span>
-<span id="cb32-365"><a href="#cb32-365" aria-hidden="true" tabindex="-1"></a>    candidatos <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">seq_len</span>(n), rec[<span class="dv">1</span><span class="sc">:</span>k])</span>
-<span id="cb32-366"><a href="#cb32-366" aria-hidden="true" tabindex="-1"></a>    d          <span class="ot">&lt;-</span> dist[actual, candidatos]   <span class="co"># fuera del tibble: actual es un solo índice</span></span>
-<span id="cb32-367"><a href="#cb32-367" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-368"><a href="#cb32-368" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
-<span id="cb32-369"><a href="#cb32-369" aria-hidden="true" tabindex="-1"></a>      <span class="at">paso      =</span> k,</span>
-<span id="cb32-370"><a href="#cb32-370" aria-hidden="true" tabindex="-1"></a>      <span class="at">actual    =</span> actual,</span>
-<span id="cb32-371"><a href="#cb32-371" aria-hidden="true" tabindex="-1"></a>      <span class="at">candidato =</span> candidatos,</span>
-<span id="cb32-372"><a href="#cb32-372" aria-hidden="true" tabindex="-1"></a>      <span class="at">d         =</span> d,</span>
-<span id="cb32-373"><a href="#cb32-373" aria-hidden="true" tabindex="-1"></a>      <span class="at">elegido   =</span> candidatos <span class="sc">==</span> rec[k <span class="sc">+</span> <span class="dv">1</span>]</span>
-<span id="cb32-374"><a href="#cb32-374" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb32-375"><a href="#cb32-375" aria-hidden="true" tabindex="-1"></a>  }) <span class="sc">%&gt;%</span></span>
-<span id="cb32-376"><a href="#cb32-376" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list_rbind</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb32-377"><a href="#cb32-377" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(xy, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"actual"</span> <span class="ot">=</span> <span class="st">"i"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb32-378"><a href="#cb32-378" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(xy, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"candidato"</span> <span class="ot">=</span> <span class="st">"i"</span>), <span class="at">suffix =</span> <span class="fu">c</span>(<span class="st">""</span>, <span class="st">"_fin"</span>))</span>
-<span id="cb32-379"><a href="#cb32-379" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-380"><a href="#cb32-380" aria-hidden="true" tabindex="-1"></a>  <span class="co"># El paso n es el estado final, con el recorrido completo</span></span>
-<span id="cb32-381"><a href="#cb32-381" aria-hidden="true" tabindex="-1"></a>  recorrido_df <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="fu">seq_len</span>(n), \(k) <span class="fu">tibble</span>(<span class="at">paso =</span> k, <span class="at">i =</span> rec[<span class="dv">1</span><span class="sc">:</span>k])) <span class="sc">%&gt;%</span></span>
-<span id="cb32-382"><a href="#cb32-382" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list_rbind</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb32-383"><a href="#cb32-383" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(xy, <span class="at">by =</span> <span class="st">"i"</span>)</span>
-<span id="cb32-384"><a href="#cb32-384" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-385"><a href="#cb32-385" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb32-386"><a href="#cb32-386" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> xy, <span class="fu">aes</span>(X, Y, <span class="at">shape =</span> ficticia), <span class="at">color =</span> <span class="st">"grey60"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb32-387"><a href="#cb32-387" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_segment</span>(</span>
-<span id="cb32-388"><a href="#cb32-388" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> candidatos_df,</span>
-<span id="cb32-389"><a href="#cb32-389" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(X, Y, <span class="at">xend =</span> X_fin, <span class="at">yend =</span> Y_fin, <span class="at">linetype =</span> elegido, <span class="at">alpha =</span> elegido),</span>
-<span id="cb32-390"><a href="#cb32-390" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> color, <span class="at">linewidth =</span> <span class="fl">0.8</span></span>
-<span id="cb32-391"><a href="#cb32-391" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb32-392"><a href="#cb32-392" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(</span>
-<span id="cb32-393"><a href="#cb32-393" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> <span class="fu">filter</span>(candidatos_df, elegido),</span>
-<span id="cb32-394"><a href="#cb32-394" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>((X <span class="sc">+</span> X_fin) <span class="sc">/</span> <span class="dv">2</span>, (Y <span class="sc">+</span> Y_fin) <span class="sc">/</span> <span class="dv">2</span>, <span class="at">label =</span> <span class="fu">paste</span>(<span class="fu">num</span>(d), <span class="st">"m"</span>)),</span>
-<span id="cb32-395"><a href="#cb32-395" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">3</span>, <span class="at">nudge_x =</span> <span class="dv">150</span></span>
-<span id="cb32-396"><a href="#cb32-396" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb32-397"><a href="#cb32-397" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_path</span>(<span class="at">data =</span> recorrido_df, <span class="fu">aes</span>(X, Y), <span class="at">color =</span> <span class="st">"grey20"</span>, <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
-<span id="cb32-398"><a href="#cb32-398" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(</span>
-<span id="cb32-399"><a href="#cb32-399" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> recorrido_df <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(paso) <span class="sc">%&gt;%</span> <span class="fu">slice_tail</span>(<span class="at">n =</span> <span class="dv">1</span>),</span>
-<span id="cb32-400"><a href="#cb32-400" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(X, Y), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">4</span></span>
-<span id="cb32-401"><a href="#cb32-401" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb32-402"><a href="#cb32-402" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_shape_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">FALSE</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">16</span>, <span class="st">`</span><span class="at">TRUE</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">1</span>)) <span class="sc">+</span>   <span class="co"># ficticias huecas</span></span>
-<span id="cb32-403"><a href="#cb32-403" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_linetype_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">TRUE</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"solid"</span>, <span class="st">`</span><span class="at">FALSE</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"dotted"</span>)) <span class="sc">+</span></span>
-<span id="cb32-404"><a href="#cb32-404" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_alpha_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">TRUE</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">`</span><span class="at">FALSE</span><span class="st">`</span> <span class="ot">=</span> <span class="fl">0.4</span>)) <span class="sc">+</span></span>
-<span id="cb32-405"><a href="#cb32-405" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
-<span id="cb32-406"><a href="#cb32-406" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">title =</span> <span class="fu">paste</span>(titulo, <span class="st">"· paso {closest_state}"</span>)) <span class="sc">+</span></span>
-<span id="cb32-407"><a href="#cb32-407" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tema_subte</span>() <span class="sc">+</span></span>
-<span id="cb32-408"><a href="#cb32-408" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
-<span id="cb32-409"><a href="#cb32-409" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transition_states</span>(paso, <span class="at">transition_length =</span> <span class="dv">1</span>, <span class="at">state_length =</span> <span class="dv">2</span>)</span>
-<span id="cb32-410"><a href="#cb32-410" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-411"><a href="#cb32-411" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Render explícito: tamaño acotado y gifski, que escribe el GIF cuadro a cuadro</span></span>
-<span id="cb32-412"><a href="#cb32-412" aria-hidden="true" tabindex="-1"></a>  <span class="co"># (el renderer por defecto, magick, carga todos los cuadros en memoria)</span></span>
-<span id="cb32-413"><a href="#cb32-413" aria-hidden="true" tabindex="-1"></a>  <span class="fu">animate</span>(</span>
-<span id="cb32-414"><a href="#cb32-414" aria-hidden="true" tabindex="-1"></a>    p,</span>
-<span id="cb32-415"><a href="#cb32-415" aria-hidden="true" tabindex="-1"></a>    <span class="at">nframes  =</span> <span class="dv">10</span> <span class="sc">*</span> n,</span>
-<span id="cb32-416"><a href="#cb32-416" aria-hidden="true" tabindex="-1"></a>    <span class="at">fps      =</span> <span class="dv">10</span>,</span>
-<span id="cb32-417"><a href="#cb32-417" aria-hidden="true" tabindex="-1"></a>    <span class="at">width    =</span> <span class="dv">700</span>,</span>
-<span id="cb32-418"><a href="#cb32-418" aria-hidden="true" tabindex="-1"></a>    <span class="at">height   =</span> <span class="dv">700</span>,</span>
-<span id="cb32-419"><a href="#cb32-419" aria-hidden="true" tabindex="-1"></a>    <span class="at">units    =</span> <span class="st">"px"</span>,   <span class="co"># dentro de knitr, gganimate asume pulgadas: 700 in = 70.000 px</span></span>
-<span id="cb32-420"><a href="#cb32-420" aria-hidden="true" tabindex="-1"></a>    <span class="at">res      =</span> <span class="dv">100</span>,</span>
-<span id="cb32-421"><a href="#cb32-421" aria-hidden="true" tabindex="-1"></a>    <span class="at">device   =</span> <span class="st">"ragg_png"</span>,</span>
-<span id="cb32-422"><a href="#cb32-422" aria-hidden="true" tabindex="-1"></a>    <span class="at">renderer =</span> <span class="fu">gifski_renderer</span>()</span>
-<span id="cb32-423"><a href="#cb32-423" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb32-424"><a href="#cb32-424" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb32-425"><a href="#cb32-425" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb32-426"><a href="#cb32-426" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-427"><a href="#cb32-427" aria-hidden="true" tabindex="-1"></a>Para ver exactamente dónde falla, en la imágen de la derecha agrego dos estaciones que simulan,con una curva exagerada, la extensión nunca finalizada de la traza a retiro y el "plan" de la estación Padre Mugica en el barrio 31.</span>
-<span id="cb32-428"><a href="#cb32-428" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-431"><a href="#cb32-431" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb32-432"><a href="#cb32-432" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: linea-h-extendida</span></span>
-<span id="cb32-433"><a href="#cb32-433" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb32-434"><a href="#cb32-434" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-435"><a href="#cb32-435" aria-hidden="true" tabindex="-1"></a>facultad <span class="ot">&lt;-</span> linea_h <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">str_detect</span>(estacion, <span class="st">"FACULTAD"</span>))</span>
-<span id="cb32-436"><a href="#cb32-436" aria-hidden="true" tabindex="-1"></a>xy_fac   <span class="ot">&lt;-</span> <span class="fu">st_coordinates</span>(facultad)</span>
+<span id="cb32-363"><a href="#cb32-363" aria-hidden="true" tabindex="-1"></a>  xy <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(<span class="fu">st_coordinates</span>(datos)) <span class="sc">%&gt;%</span></span>
+<span id="cb32-364"><a href="#cb32-364" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">i =</span> <span class="fu">row_number</span>(), <span class="at">ficticia =</span> i <span class="sc">%in%</span> ficticias)</span>
+<span id="cb32-365"><a href="#cb32-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-366"><a href="#cb32-366" aria-hidden="true" tabindex="-1"></a>  candidatos_df <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="fu">seq_len</span>(n <span class="sc">-</span> <span class="dv">1</span>), \(k) {</span>
+<span id="cb32-367"><a href="#cb32-367" aria-hidden="true" tabindex="-1"></a>    actual     <span class="ot">&lt;-</span> rec[k]</span>
+<span id="cb32-368"><a href="#cb32-368" aria-hidden="true" tabindex="-1"></a>    candidatos <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">seq_len</span>(n), rec[<span class="dv">1</span><span class="sc">:</span>k])</span>
+<span id="cb32-369"><a href="#cb32-369" aria-hidden="true" tabindex="-1"></a>    d          <span class="ot">&lt;-</span> dist[actual, candidatos]   <span class="co"># fuera del tibble: actual es un solo índice</span></span>
+<span id="cb32-370"><a href="#cb32-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-371"><a href="#cb32-371" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
+<span id="cb32-372"><a href="#cb32-372" aria-hidden="true" tabindex="-1"></a>      <span class="at">paso      =</span> k,</span>
+<span id="cb32-373"><a href="#cb32-373" aria-hidden="true" tabindex="-1"></a>      <span class="at">actual    =</span> actual,</span>
+<span id="cb32-374"><a href="#cb32-374" aria-hidden="true" tabindex="-1"></a>      <span class="at">candidato =</span> candidatos,</span>
+<span id="cb32-375"><a href="#cb32-375" aria-hidden="true" tabindex="-1"></a>      <span class="at">d         =</span> d,</span>
+<span id="cb32-376"><a href="#cb32-376" aria-hidden="true" tabindex="-1"></a>      <span class="at">elegido   =</span> candidatos <span class="sc">==</span> rec[k <span class="sc">+</span> <span class="dv">1</span>]</span>
+<span id="cb32-377"><a href="#cb32-377" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb32-378"><a href="#cb32-378" aria-hidden="true" tabindex="-1"></a>  }) <span class="sc">%&gt;%</span></span>
+<span id="cb32-379"><a href="#cb32-379" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list_rbind</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb32-380"><a href="#cb32-380" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(xy, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"actual"</span> <span class="ot">=</span> <span class="st">"i"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb32-381"><a href="#cb32-381" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(xy, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"candidato"</span> <span class="ot">=</span> <span class="st">"i"</span>), <span class="at">suffix =</span> <span class="fu">c</span>(<span class="st">""</span>, <span class="st">"_fin"</span>))</span>
+<span id="cb32-382"><a href="#cb32-382" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-383"><a href="#cb32-383" aria-hidden="true" tabindex="-1"></a>  <span class="co"># El paso n es el estado final, con el recorrido completo</span></span>
+<span id="cb32-384"><a href="#cb32-384" aria-hidden="true" tabindex="-1"></a>  recorrido_df <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="fu">seq_len</span>(n), \(k) <span class="fu">tibble</span>(<span class="at">paso =</span> k, <span class="at">i =</span> rec[<span class="dv">1</span><span class="sc">:</span>k])) <span class="sc">%&gt;%</span></span>
+<span id="cb32-385"><a href="#cb32-385" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list_rbind</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb32-386"><a href="#cb32-386" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(xy, <span class="at">by =</span> <span class="st">"i"</span>)</span>
+<span id="cb32-387"><a href="#cb32-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-388"><a href="#cb32-388" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb32-389"><a href="#cb32-389" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> xy, <span class="fu">aes</span>(X, Y, <span class="at">shape =</span> ficticia), <span class="at">color =</span> <span class="st">"grey60"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb32-390"><a href="#cb32-390" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_segment</span>(</span>
+<span id="cb32-391"><a href="#cb32-391" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> candidatos_df,</span>
+<span id="cb32-392"><a href="#cb32-392" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(X, Y, <span class="at">xend =</span> X_fin, <span class="at">yend =</span> Y_fin, <span class="at">linetype =</span> elegido, <span class="at">alpha =</span> elegido),</span>
+<span id="cb32-393"><a href="#cb32-393" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> color, <span class="at">linewidth =</span> <span class="fl">0.8</span></span>
+<span id="cb32-394"><a href="#cb32-394" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb32-395"><a href="#cb32-395" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(</span>
+<span id="cb32-396"><a href="#cb32-396" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> <span class="fu">filter</span>(candidatos_df, elegido),</span>
+<span id="cb32-397"><a href="#cb32-397" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>((X <span class="sc">+</span> X_fin) <span class="sc">/</span> <span class="dv">2</span>, (Y <span class="sc">+</span> Y_fin) <span class="sc">/</span> <span class="dv">2</span>, <span class="at">label =</span> <span class="fu">paste</span>(<span class="fu">num</span>(d), <span class="st">"m"</span>)),</span>
+<span id="cb32-398"><a href="#cb32-398" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">3</span>, <span class="at">nudge_x =</span> <span class="dv">150</span></span>
+<span id="cb32-399"><a href="#cb32-399" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb32-400"><a href="#cb32-400" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_path</span>(<span class="at">data =</span> recorrido_df, <span class="fu">aes</span>(X, Y), <span class="at">color =</span> <span class="st">"grey20"</span>, <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb32-401"><a href="#cb32-401" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(</span>
+<span id="cb32-402"><a href="#cb32-402" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> recorrido_df <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(paso) <span class="sc">%&gt;%</span> <span class="fu">slice_tail</span>(<span class="at">n =</span> <span class="dv">1</span>),</span>
+<span id="cb32-403"><a href="#cb32-403" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(X, Y), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">4</span></span>
+<span id="cb32-404"><a href="#cb32-404" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb32-405"><a href="#cb32-405" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_shape_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">FALSE</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">16</span>, <span class="st">`</span><span class="at">TRUE</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">1</span>)) <span class="sc">+</span>   <span class="co"># ficticias huecas</span></span>
+<span id="cb32-406"><a href="#cb32-406" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_linetype_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">TRUE</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"solid"</span>, <span class="st">`</span><span class="at">FALSE</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"dotted"</span>)) <span class="sc">+</span></span>
+<span id="cb32-407"><a href="#cb32-407" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_alpha_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">TRUE</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">`</span><span class="at">FALSE</span><span class="st">`</span> <span class="ot">=</span> <span class="fl">0.4</span>)) <span class="sc">+</span></span>
+<span id="cb32-408"><a href="#cb32-408" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
+<span id="cb32-409"><a href="#cb32-409" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">title =</span> <span class="fu">paste</span>(titulo, <span class="st">"· paso {closest_state}"</span>)) <span class="sc">+</span></span>
+<span id="cb32-410"><a href="#cb32-410" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tema_subte</span>() <span class="sc">+</span></span>
+<span id="cb32-411"><a href="#cb32-411" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb32-412"><a href="#cb32-412" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transition_states</span>(paso, <span class="at">transition_length =</span> <span class="dv">1</span>, <span class="at">state_length =</span> <span class="dv">2</span>)</span>
+<span id="cb32-413"><a href="#cb32-413" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-414"><a href="#cb32-414" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Render explícito: tamaño acotado y gifski, que escribe el GIF cuadro a cuadro</span></span>
+<span id="cb32-415"><a href="#cb32-415" aria-hidden="true" tabindex="-1"></a>  <span class="co"># (el renderer por defecto, magick, carga todos los cuadros en memoria)</span></span>
+<span id="cb32-416"><a href="#cb32-416" aria-hidden="true" tabindex="-1"></a>  <span class="fu">animate</span>(</span>
+<span id="cb32-417"><a href="#cb32-417" aria-hidden="true" tabindex="-1"></a>    p,</span>
+<span id="cb32-418"><a href="#cb32-418" aria-hidden="true" tabindex="-1"></a>    <span class="at">nframes  =</span> <span class="dv">10</span> <span class="sc">*</span> n,</span>
+<span id="cb32-419"><a href="#cb32-419" aria-hidden="true" tabindex="-1"></a>    <span class="at">fps      =</span> <span class="dv">10</span>,</span>
+<span id="cb32-420"><a href="#cb32-420" aria-hidden="true" tabindex="-1"></a>    <span class="at">width    =</span> <span class="dv">700</span>,</span>
+<span id="cb32-421"><a href="#cb32-421" aria-hidden="true" tabindex="-1"></a>    <span class="at">height   =</span> <span class="dv">700</span>,</span>
+<span id="cb32-422"><a href="#cb32-422" aria-hidden="true" tabindex="-1"></a>    <span class="at">units    =</span> <span class="st">"px"</span>,   <span class="co"># dentro de knitr, gganimate asume pulgadas: 700 in = 70.000 px</span></span>
+<span id="cb32-423"><a href="#cb32-423" aria-hidden="true" tabindex="-1"></a>    <span class="at">res      =</span> <span class="dv">100</span>,</span>
+<span id="cb32-424"><a href="#cb32-424" aria-hidden="true" tabindex="-1"></a>    <span class="at">device   =</span> <span class="st">"ragg_png"</span>,</span>
+<span id="cb32-425"><a href="#cb32-425" aria-hidden="true" tabindex="-1"></a>    <span class="at">renderer =</span> <span class="fu">gifski_renderer</span>()</span>
+<span id="cb32-426"><a href="#cb32-426" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb32-427"><a href="#cb32-427" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-428"><a href="#cb32-428" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-429"><a href="#cb32-429" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-430"><a href="#cb32-430" aria-hidden="true" tabindex="-1"></a>Para ver exactamente dónde falla, en la imágen de la derecha agrego dos estaciones que simulan,con una curva exagerada, la extensión nunca finalizada de la traza a retiro y el "plan" de la estación Padre Mugica en el barrio 31.</span>
+<span id="cb32-431"><a href="#cb32-431" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-434"><a href="#cb32-434" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-435"><a href="#cb32-435" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: linea-h-extendida</span></span>
+<span id="cb32-436"><a href="#cb32-436" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
 <span id="cb32-437"><a href="#cb32-437" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-438"><a href="#cb32-438" aria-hidden="true" tabindex="-1"></a>separacion_m <span class="ot">&lt;-</span> <span class="dv">600</span>   <span class="co"># distancia entre ficticias</span></span>
-<span id="cb32-439"><a href="#cb32-439" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-440"><a href="#cb32-440" aria-hidden="true" tabindex="-1"></a>ficticias <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb32-441"><a href="#cb32-441" aria-hidden="true" tabindex="-1"></a>  <span class="at">id       =</span> <span class="fu">c</span>(<span class="dv">901</span>, <span class="dv">902</span>),</span>
-<span id="cb32-442"><a href="#cb32-442" aria-hidden="true" tabindex="-1"></a>  <span class="at">estacion =</span> <span class="fu">c</span>(<span class="st">"Padre Mugica"</span>, <span class="st">"Retiro"</span>),</span>
-<span id="cb32-443"><a href="#cb32-443" aria-hidden="true" tabindex="-1"></a>  <span class="at">linea    =</span> <span class="st">"H"</span>,</span>
-<span id="cb32-444"><a href="#cb32-444" aria-hidden="true" tabindex="-1"></a>  <span class="at">x        =</span> xy_fac[<span class="dv">1</span>, <span class="st">"X"</span>],</span>
-<span id="cb32-445"><a href="#cb32-445" aria-hidden="true" tabindex="-1"></a>  <span class="at">y        =</span> xy_fac[<span class="dv">1</span>, <span class="st">"Y"</span>] <span class="sc">-</span> separacion_m <span class="sc">*</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>   <span class="co"># hacia el sur: -Y en EPSG:5347</span></span>
-<span id="cb32-446"><a href="#cb32-446" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb32-447"><a href="#cb32-447" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>), <span class="at">crs =</span> <span class="fu">st_crs</span>(linea_h))</span>
-<span id="cb32-448"><a href="#cb32-448" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-449"><a href="#cb32-449" aria-hidden="true" tabindex="-1"></a><span class="co"># Las ficticias van al final: los índices de linea_h (e `inicio`) siguen valiendo</span></span>
-<span id="cb32-450"><a href="#cb32-450" aria-hidden="true" tabindex="-1"></a>linea_h_ext <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
-<span id="cb32-451"><a href="#cb32-451" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(linea_h, id, estacion, linea),</span>
-<span id="cb32-452"><a href="#cb32-452" aria-hidden="true" tabindex="-1"></a>  ficticias</span>
-<span id="cb32-453"><a href="#cb32-453" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb32-454"><a href="#cb32-454" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb32-455"><a href="#cb32-455" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-456"><a href="#cb32-456" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-459"><a href="#cb32-459" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb32-460"><a href="#cb32-460" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-prueba-4-pasos</span></span>
-<span id="cb32-461"><a href="#cb32-461" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb32-462"><a href="#cb32-462" aria-hidden="true" tabindex="-1"></a><span class="co">#| layout-ncol: 2</span></span>
-<span id="cb32-463"><a href="#cb32-463" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Vecino más cercano paso a paso, desde Hospitales."</span></span>
-<span id="cb32-464"><a href="#cb32-464" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-subcap:</span></span>
-<span id="cb32-465"><a href="#cb32-465" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - "Línea H real."</span></span>
-<span id="cb32-466"><a href="#cb32-466" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - "Con dos estaciones ficticias al sur de Facultad de Derecho: el gancho confunde al algoritmo."</span></span>
-<span id="cb32-467"><a href="#cb32-467" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-468"><a href="#cb32-468" aria-hidden="true" tabindex="-1"></a><span class="co"># Cada GIF con nombre propio: si se imprimen directo, knitr los escribe en el</span></span>
-<span id="cb32-469"><a href="#cb32-469" aria-hidden="true" tabindex="-1"></a><span class="co"># mismo archivo y el segundo pisa al primero</span></span>
-<span id="cb32-470"><a href="#cb32-470" aria-hidden="true" tabindex="-1"></a>dir_figs <span class="ot">&lt;-</span> knitr<span class="sc">::</span>opts_current<span class="sc">$</span><span class="fu">get</span>(<span class="st">"fig.path"</span>)</span>
-<span id="cb32-471"><a href="#cb32-471" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(dir_figs, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb32-472"><a href="#cb32-472" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-473"><a href="#cb32-473" aria-hidden="true" tabindex="-1"></a>gif_real <span class="ot">&lt;-</span> <span class="fu">paste0</span>(dir_figs, <span class="st">"vecino-h-real.gif"</span>)</span>
-<span id="cb32-474"><a href="#cb32-474" aria-hidden="true" tabindex="-1"></a>gif_ext  <span class="ot">&lt;-</span> <span class="fu">paste0</span>(dir_figs, <span class="st">"vecino-h-ficticias.gif"</span>)</span>
+<span id="cb32-438"><a href="#cb32-438" aria-hidden="true" tabindex="-1"></a>facultad <span class="ot">&lt;-</span> linea_h <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">str_detect</span>(estacion, <span class="st">"FACULTAD"</span>))</span>
+<span id="cb32-439"><a href="#cb32-439" aria-hidden="true" tabindex="-1"></a>xy_fac   <span class="ot">&lt;-</span> <span class="fu">st_coordinates</span>(facultad)</span>
+<span id="cb32-440"><a href="#cb32-440" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-441"><a href="#cb32-441" aria-hidden="true" tabindex="-1"></a>separacion_m <span class="ot">&lt;-</span> <span class="dv">600</span>   <span class="co"># distancia entre ficticias</span></span>
+<span id="cb32-442"><a href="#cb32-442" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-443"><a href="#cb32-443" aria-hidden="true" tabindex="-1"></a>ficticias <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb32-444"><a href="#cb32-444" aria-hidden="true" tabindex="-1"></a>  <span class="at">id       =</span> <span class="fu">c</span>(<span class="dv">901</span>, <span class="dv">902</span>),</span>
+<span id="cb32-445"><a href="#cb32-445" aria-hidden="true" tabindex="-1"></a>  <span class="at">estacion =</span> <span class="fu">c</span>(<span class="st">"Padre Mugica"</span>, <span class="st">"Retiro"</span>),</span>
+<span id="cb32-446"><a href="#cb32-446" aria-hidden="true" tabindex="-1"></a>  <span class="at">linea    =</span> <span class="st">"H"</span>,</span>
+<span id="cb32-447"><a href="#cb32-447" aria-hidden="true" tabindex="-1"></a>  <span class="at">x        =</span> xy_fac[<span class="dv">1</span>, <span class="st">"X"</span>],</span>
+<span id="cb32-448"><a href="#cb32-448" aria-hidden="true" tabindex="-1"></a>  <span class="at">y        =</span> xy_fac[<span class="dv">1</span>, <span class="st">"Y"</span>] <span class="sc">-</span> separacion_m <span class="sc">*</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>   <span class="co"># hacia el sur: -Y en EPSG:5347</span></span>
+<span id="cb32-449"><a href="#cb32-449" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb32-450"><a href="#cb32-450" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>), <span class="at">crs =</span> <span class="fu">st_crs</span>(linea_h))</span>
+<span id="cb32-451"><a href="#cb32-451" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-452"><a href="#cb32-452" aria-hidden="true" tabindex="-1"></a><span class="co"># Las ficticias van al final: los índices de linea_h (e `inicio`) siguen valiendo</span></span>
+<span id="cb32-453"><a href="#cb32-453" aria-hidden="true" tabindex="-1"></a>linea_h_ext <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb32-454"><a href="#cb32-454" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(linea_h, id, estacion, linea),</span>
+<span id="cb32-455"><a href="#cb32-455" aria-hidden="true" tabindex="-1"></a>  ficticias</span>
+<span id="cb32-456"><a href="#cb32-456" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb32-457"><a href="#cb32-457" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-458"><a href="#cb32-458" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-459"><a href="#cb32-459" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-462"><a href="#cb32-462" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-463"><a href="#cb32-463" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-prueba-4-pasos</span></span>
+<span id="cb32-464"><a href="#cb32-464" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb32-465"><a href="#cb32-465" aria-hidden="true" tabindex="-1"></a><span class="co">#| layout-ncol: 2</span></span>
+<span id="cb32-466"><a href="#cb32-466" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Vecino más cercano paso a paso, desde Hospitales."</span></span>
+<span id="cb32-467"><a href="#cb32-467" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-subcap:</span></span>
+<span id="cb32-468"><a href="#cb32-468" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - "Línea H real."</span></span>
+<span id="cb32-469"><a href="#cb32-469" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - "Con dos estaciones ficticias al sur de Facultad de Derecho: el gancho confunde al algoritmo."</span></span>
+<span id="cb32-470"><a href="#cb32-470" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-471"><a href="#cb32-471" aria-hidden="true" tabindex="-1"></a><span class="co"># Cada GIF con nombre propio: si se imprimen directo, knitr los escribe en el</span></span>
+<span id="cb32-472"><a href="#cb32-472" aria-hidden="true" tabindex="-1"></a><span class="co"># mismo archivo y el segundo pisa al primero</span></span>
+<span id="cb32-473"><a href="#cb32-473" aria-hidden="true" tabindex="-1"></a>dir_figs <span class="ot">&lt;-</span> knitr<span class="sc">::</span>opts_current<span class="sc">$</span><span class="fu">get</span>(<span class="st">"fig.path"</span>)</span>
+<span id="cb32-474"><a href="#cb32-474" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(dir_figs, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb32-475"><a href="#cb32-475" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-476"><a href="#cb32-476" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(gif_real, <span class="fu">animar_vecino</span>(linea_h, <span class="at">inicio =</span> inicio, <span class="at">titulo =</span> <span class="st">"Línea H"</span>))</span>
-<span id="cb32-477"><a href="#cb32-477" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(gif_ext, <span class="fu">animar_vecino</span>(</span>
-<span id="cb32-478"><a href="#cb32-478" aria-hidden="true" tabindex="-1"></a>  linea_h_ext,</span>
-<span id="cb32-479"><a href="#cb32-479" aria-hidden="true" tabindex="-1"></a>  <span class="at">inicio    =</span> inicio,</span>
-<span id="cb32-480"><a href="#cb32-480" aria-hidden="true" tabindex="-1"></a>  <span class="at">titulo    =</span> <span class="st">"Línea H + 2 ficticias"</span>,</span>
-<span id="cb32-481"><a href="#cb32-481" aria-hidden="true" tabindex="-1"></a>  <span class="at">ficticias =</span> <span class="fu">which</span>(linea_h_ext<span class="sc">$</span>id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">901</span>, <span class="dv">902</span>))</span>
-<span id="cb32-482"><a href="#cb32-482" aria-hidden="true" tabindex="-1"></a>))</span>
-<span id="cb32-483"><a href="#cb32-483" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-484"><a href="#cb32-484" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="fu">c</span>(gif_real, gif_ext))</span>
-<span id="cb32-485"><a href="#cb32-485" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-476"><a href="#cb32-476" aria-hidden="true" tabindex="-1"></a>gif_real <span class="ot">&lt;-</span> <span class="fu">paste0</span>(dir_figs, <span class="st">"vecino-h-real.gif"</span>)</span>
+<span id="cb32-477"><a href="#cb32-477" aria-hidden="true" tabindex="-1"></a>gif_ext  <span class="ot">&lt;-</span> <span class="fu">paste0</span>(dir_figs, <span class="st">"vecino-h-ficticias.gif"</span>)</span>
+<span id="cb32-478"><a href="#cb32-478" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-479"><a href="#cb32-479" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(gif_real, <span class="fu">animar_vecino</span>(linea_h, <span class="at">inicio =</span> inicio, <span class="at">titulo =</span> <span class="st">"Línea H"</span>))</span>
+<span id="cb32-480"><a href="#cb32-480" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(gif_ext, <span class="fu">animar_vecino</span>(</span>
+<span id="cb32-481"><a href="#cb32-481" aria-hidden="true" tabindex="-1"></a>  linea_h_ext,</span>
+<span id="cb32-482"><a href="#cb32-482" aria-hidden="true" tabindex="-1"></a>  <span class="at">inicio    =</span> inicio,</span>
+<span id="cb32-483"><a href="#cb32-483" aria-hidden="true" tabindex="-1"></a>  <span class="at">titulo    =</span> <span class="st">"Línea H + 2 ficticias"</span>,</span>
+<span id="cb32-484"><a href="#cb32-484" aria-hidden="true" tabindex="-1"></a>  <span class="at">ficticias =</span> <span class="fu">which</span>(linea_h_ext<span class="sc">$</span>id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">901</span>, <span class="dv">902</span>))</span>
+<span id="cb32-485"><a href="#cb32-485" aria-hidden="true" tabindex="-1"></a>))</span>
 <span id="cb32-486"><a href="#cb32-486" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-487"><a href="#cb32-487" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
-<span id="cb32-488"><a href="#cb32-488" aria-hidden="true" tabindex="-1"></a>Este algoritmo depende de que las cabeceras efectivamente sean las más lejanas y de elegir la correcta. Me di cuenta (tarde) de que en la línea E, Retiro está más cerca de Plaza de los Virreyes que Catalinas: si arrancamos desde Catalinas, hay un salto.</span>
-<span id="cb32-489"><a href="#cb32-489" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb32-490"><a href="#cb32-490" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-493"><a href="#cb32-493" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb32-494"><a href="#cb32-494" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-prueba-4-linea-e</span></span>
-<span id="cb32-495"><a href="#cb32-495" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb32-496"><a href="#cb32-496" aria-hidden="true" tabindex="-1"></a><span class="co">#| layout-ncol: 2</span></span>
-<span id="cb32-497"><a href="#cb32-497" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Línea E: el mismo algoritmo, arrancando desde cada punta del par más lejano."</span></span>
-<span id="cb32-498"><a href="#cb32-498" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-subcap:</span></span>
-<span id="cb32-499"><a href="#cb32-499" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - "Desde Plaza de los Virreyes: recorre la línea entera."</span></span>
-<span id="cb32-500"><a href="#cb32-500" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - "Desde Catalinas: le queda una estación varada y termina con un salto."</span></span>
-<span id="cb32-501"><a href="#cb32-501" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-502"><a href="#cb32-502" aria-hidden="true" tabindex="-1"></a>linea_e   <span class="ot">&lt;-</span> estaciones <span class="sc">%&gt;%</span> <span class="fu">filter</span>(linea <span class="sc">==</span> <span class="st">"E"</span>)</span>
-<span id="cb32-503"><a href="#cb32-503" aria-hidden="true" tabindex="-1"></a>d_e       <span class="ot">&lt;-</span> units<span class="sc">::</span><span class="fu">drop_units</span>(<span class="fu">st_distance</span>(linea_e))</span>
-<span id="cb32-504"><a href="#cb32-504" aria-hidden="true" tabindex="-1"></a>cabeceras <span class="ot">&lt;-</span> <span class="fu">which</span>(d_e <span class="sc">==</span> <span class="fu">max</span>(d_e), <span class="at">arr.ind =</span> <span class="cn">TRUE</span>)[<span class="dv">1</span>, ]</span>
-<span id="cb32-505"><a href="#cb32-505" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-506"><a href="#cb32-506" aria-hidden="true" tabindex="-1"></a>nombre <span class="ot">&lt;-</span> \(i) <span class="fu">str_to_title</span>(linea_e<span class="sc">$</span>estacion[i])</span>
-<span id="cb32-507"><a href="#cb32-507" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-508"><a href="#cb32-508" aria-hidden="true" tabindex="-1"></a>gif_e_ok    <span class="ot">&lt;-</span> <span class="fu">paste0</span>(dir_figs, <span class="st">"vecino-e-cabecera-2.gif"</span>)</span>
-<span id="cb32-509"><a href="#cb32-509" aria-hidden="true" tabindex="-1"></a>gif_e_salto <span class="ot">&lt;-</span> <span class="fu">paste0</span>(dir_figs, <span class="st">"vecino-e-cabecera-1.gif"</span>)</span>
+<span id="cb32-487"><a href="#cb32-487" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="fu">c</span>(gif_real, gif_ext))</span>
+<span id="cb32-488"><a href="#cb32-488" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-489"><a href="#cb32-489" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-490"><a href="#cb32-490" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb32-491"><a href="#cb32-491" aria-hidden="true" tabindex="-1"></a>Este algoritmo depende de que las cabeceras efectivamente sean las más lejanas y de elegir la correcta. Me di cuenta (tarde) de que en la línea E, Retiro está más cerca de Plaza de los Virreyes que Catalinas: si arrancamos desde Catalinas, hay un salto.</span>
+<span id="cb32-492"><a href="#cb32-492" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb32-493"><a href="#cb32-493" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-496"><a href="#cb32-496" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-497"><a href="#cb32-497" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-prueba-4-linea-e</span></span>
+<span id="cb32-498"><a href="#cb32-498" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb32-499"><a href="#cb32-499" aria-hidden="true" tabindex="-1"></a><span class="co">#| layout-ncol: 2</span></span>
+<span id="cb32-500"><a href="#cb32-500" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Línea E: el mismo algoritmo, arrancando desde cada punta del par más lejano."</span></span>
+<span id="cb32-501"><a href="#cb32-501" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-subcap:</span></span>
+<span id="cb32-502"><a href="#cb32-502" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - "Desde Plaza de los Virreyes: recorre la línea entera."</span></span>
+<span id="cb32-503"><a href="#cb32-503" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - "Desde Catalinas: le queda una estación varada y termina con un salto."</span></span>
+<span id="cb32-504"><a href="#cb32-504" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-505"><a href="#cb32-505" aria-hidden="true" tabindex="-1"></a>linea_e   <span class="ot">&lt;-</span> estaciones <span class="sc">%&gt;%</span> <span class="fu">filter</span>(linea <span class="sc">==</span> <span class="st">"E"</span>)</span>
+<span id="cb32-506"><a href="#cb32-506" aria-hidden="true" tabindex="-1"></a>d_e       <span class="ot">&lt;-</span> units<span class="sc">::</span><span class="fu">drop_units</span>(<span class="fu">st_distance</span>(linea_e))</span>
+<span id="cb32-507"><a href="#cb32-507" aria-hidden="true" tabindex="-1"></a>cabeceras <span class="ot">&lt;-</span> <span class="fu">which</span>(d_e <span class="sc">==</span> <span class="fu">max</span>(d_e), <span class="at">arr.ind =</span> <span class="cn">TRUE</span>)[<span class="dv">1</span>, ]</span>
+<span id="cb32-508"><a href="#cb32-508" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-509"><a href="#cb32-509" aria-hidden="true" tabindex="-1"></a>nombre <span class="ot">&lt;-</span> \(i) <span class="fu">str_to_title</span>(linea_e<span class="sc">$</span>estacion[i])</span>
 <span id="cb32-510"><a href="#cb32-510" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-511"><a href="#cb32-511" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(gif_e_ok, <span class="fu">animar_vecino</span>(</span>
-<span id="cb32-512"><a href="#cb32-512" aria-hidden="true" tabindex="-1"></a>  linea_e, <span class="at">inicio =</span> cabeceras[<span class="dv">2</span>], <span class="at">titulo =</span> <span class="fu">paste</span>(<span class="st">"Línea E desde"</span>, <span class="fu">nombre</span>(cabeceras[<span class="dv">2</span>]))</span>
-<span id="cb32-513"><a href="#cb32-513" aria-hidden="true" tabindex="-1"></a>))</span>
-<span id="cb32-514"><a href="#cb32-514" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(gif_e_salto, <span class="fu">animar_vecino</span>(</span>
-<span id="cb32-515"><a href="#cb32-515" aria-hidden="true" tabindex="-1"></a>  linea_e, <span class="at">inicio =</span> cabeceras[<span class="dv">1</span>], <span class="at">titulo =</span> <span class="fu">paste</span>(<span class="st">"Línea E desde"</span>, <span class="fu">nombre</span>(cabeceras[<span class="dv">1</span>]))</span>
+<span id="cb32-511"><a href="#cb32-511" aria-hidden="true" tabindex="-1"></a>gif_e_ok    <span class="ot">&lt;-</span> <span class="fu">paste0</span>(dir_figs, <span class="st">"vecino-e-cabecera-2.gif"</span>)</span>
+<span id="cb32-512"><a href="#cb32-512" aria-hidden="true" tabindex="-1"></a>gif_e_salto <span class="ot">&lt;-</span> <span class="fu">paste0</span>(dir_figs, <span class="st">"vecino-e-cabecera-1.gif"</span>)</span>
+<span id="cb32-513"><a href="#cb32-513" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-514"><a href="#cb32-514" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(gif_e_ok, <span class="fu">animar_vecino</span>(</span>
+<span id="cb32-515"><a href="#cb32-515" aria-hidden="true" tabindex="-1"></a>  linea_e, <span class="at">inicio =</span> cabeceras[<span class="dv">2</span>], <span class="at">titulo =</span> <span class="fu">paste</span>(<span class="st">"Línea E desde"</span>, <span class="fu">nombre</span>(cabeceras[<span class="dv">2</span>]))</span>
 <span id="cb32-516"><a href="#cb32-516" aria-hidden="true" tabindex="-1"></a>))</span>
-<span id="cb32-517"><a href="#cb32-517" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-518"><a href="#cb32-518" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="fu">c</span>(gif_e_ok, gif_e_salto))</span>
-<span id="cb32-519"><a href="#cb32-519" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-517"><a href="#cb32-517" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(gif_e_salto, <span class="fu">animar_vecino</span>(</span>
+<span id="cb32-518"><a href="#cb32-518" aria-hidden="true" tabindex="-1"></a>  linea_e, <span class="at">inicio =</span> cabeceras[<span class="dv">1</span>], <span class="at">titulo =</span> <span class="fu">paste</span>(<span class="st">"Línea E desde"</span>, <span class="fu">nombre</span>(cabeceras[<span class="dv">1</span>]))</span>
+<span id="cb32-519"><a href="#cb32-519" aria-hidden="true" tabindex="-1"></a>))</span>
 <span id="cb32-520"><a href="#cb32-520" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-521"><a href="#cb32-521" aria-hidden="true" tabindex="-1"></a>Para <span class="co">[</span><span class="ot">otros ejemplos gráficos</span><span class="co">](https://stemlounge.com/animated-algorithms-for-the-traveling-salesman-problem/)</span> de como funciona este algoritmo, y por qué si bien es rápido, **no es el adecuado para este problema**.</span>
-<span id="cb32-522"><a href="#cb32-522" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-523"><a href="#cb32-523" aria-hidden="true" tabindex="-1"></a><span class="fu">### Prueba 5: PCA</span></span>
-<span id="cb32-524"><a href="#cb32-524" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-525"><a href="#cb32-525" aria-hidden="true" tabindex="-1"></a>Otra forma de pensarlo: si la línea es aproximadamente recta, existe una **dirección** sobre la que se extiende. El análisis de componentes principales (PCA) encuentra justamente esa dirección, la de mayor varianza. Proyecto cada estación sobre ese eje y ordeno por la proyección.</span>
-<span id="cb32-526"><a href="#cb32-526" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-529"><a href="#cb32-529" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb32-530"><a href="#cb32-530" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: prueba-5</span></span>
-<span id="cb32-531"><a href="#cb32-531" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-532"><a href="#cb32-532" aria-hidden="true" tabindex="-1"></a>coords <span class="ot">&lt;-</span> <span class="fu">st_coordinates</span>(linea_h)</span>
-<span id="cb32-533"><a href="#cb32-533" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(coords)</span>
+<span id="cb32-521"><a href="#cb32-521" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="fu">c</span>(gif_e_ok, gif_e_salto))</span>
+<span id="cb32-522"><a href="#cb32-522" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-523"><a href="#cb32-523" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-524"><a href="#cb32-524" aria-hidden="true" tabindex="-1"></a>Para <span class="co">[</span><span class="ot">otros ejemplos gráficos</span><span class="co">](https://stemlounge.com/animated-algorithms-for-the-traveling-salesman-problem/)</span> de como funciona este algoritmo, y por qué si bien es rápido, **no es el adecuado para este problema**.</span>
+<span id="cb32-525"><a href="#cb32-525" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-526"><a href="#cb32-526" aria-hidden="true" tabindex="-1"></a><span class="fu">### Prueba 5: PCA</span></span>
+<span id="cb32-527"><a href="#cb32-527" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-528"><a href="#cb32-528" aria-hidden="true" tabindex="-1"></a>Otra forma de pensarlo: si la línea es aproximadamente recta, existe una **dirección** sobre la que se extiende. El análisis de componentes principales (PCA) encuentra justamente esa dirección, la de mayor varianza. Proyecto cada estación sobre ese eje y ordeno por la proyección.</span>
+<span id="cb32-529"><a href="#cb32-529" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-532"><a href="#cb32-532" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-533"><a href="#cb32-533" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: prueba-5</span></span>
 <span id="cb32-534"><a href="#cb32-534" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-535"><a href="#cb32-535" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pca)<span class="sc">$</span>importance</span>
-<span id="cb32-536"><a href="#cb32-536" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-537"><a href="#cb32-537" aria-hidden="true" tabindex="-1"></a>linea_h_p5 <span class="ot">&lt;-</span> <span class="fu">slice</span>(linea_h, <span class="fu">order</span>(pca<span class="sc">$</span>x[, <span class="dv">1</span>]))</span>
-<span id="cb32-538"><a href="#cb32-538" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-535"><a href="#cb32-535" aria-hidden="true" tabindex="-1"></a>coords <span class="ot">&lt;-</span> <span class="fu">st_coordinates</span>(linea_h)</span>
+<span id="cb32-536"><a href="#cb32-536" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(coords)</span>
+<span id="cb32-537"><a href="#cb32-537" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-538"><a href="#cb32-538" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pca)<span class="sc">$</span>importance</span>
 <span id="cb32-539"><a href="#cb32-539" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-542"><a href="#cb32-542" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb32-543"><a href="#cb32-543" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-prueba-5</span></span>
-<span id="cb32-544"><a href="#cb32-544" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Prueba 5: orden según la proyección sobre el primer componente principal."</span></span>
-<span id="cb32-545"><a href="#cb32-545" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-546"><a href="#cb32-546" aria-hidden="true" tabindex="-1"></a><span class="fu">mapa_orden</span>(linea_h_p5, <span class="st">"Prueba 5: PCA"</span>, <span class="at">etiqueta =</span> <span class="st">"estacion"</span>)</span>
-<span id="cb32-547"><a href="#cb32-547" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-540"><a href="#cb32-540" aria-hidden="true" tabindex="-1"></a>linea_h_p5 <span class="ot">&lt;-</span> <span class="fu">slice</span>(linea_h, <span class="fu">order</span>(pca<span class="sc">$</span>x[, <span class="dv">1</span>]))</span>
+<span id="cb32-541"><a href="#cb32-541" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-542"><a href="#cb32-542" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-545"><a href="#cb32-545" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-546"><a href="#cb32-546" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-prueba-5</span></span>
+<span id="cb32-547"><a href="#cb32-547" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Prueba 5: orden según la proyección sobre el primer componente principal."</span></span>
 <span id="cb32-548"><a href="#cb32-548" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-549"><a href="#cb32-549" aria-hidden="true" tabindex="-1"></a>**Es elegante** y no necesita saber dónde están las cabeceras. Pero sufre la misma limitación que la prueba 3: si la línea dobla, dos estaciones pueden proyectarse casi en el mismo punto del eje aunque estén lejos en el recorrido. </span>
-<span id="cb32-550"><a href="#cb32-550" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-551"><a href="#cb32-551" aria-hidden="true" tabindex="-1"></a><span class="fu">## ¿Y entonces?</span></span>
-<span id="cb32-552"><a href="#cb32-552" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-553"><a href="#cb32-553" aria-hidden="true" tabindex="-1"></a>Cinco pruebas y una sola línea. Confiar en el orden del dataset fue lo único que falló de entrada. Las cabeceras salieron del máximo de la matriz de distancias, y para las estaciones del medio la distancia a una cabecera y el vecino más cercano devolvieron el recorrido de la H sin problemas. PCA llega a lo mismo por otro camino. </span>
-<span id="cb32-554"><a href="#cb32-554" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-555"><a href="#cb32-555" aria-hidden="true" tabindex="-1"></a>Las tres son lo que se llama <span class="co">[</span><span class="ot">heurísticas</span><span class="co">](https://es.wikipedia.org/wiki/Heur%C3%ADstica#La_heur%C3%ADstica_como_metodolog%C3%ADa_cient%C3%ADfica)</span>: atajos razonables que suelen dar una buena respuesta, sin garantía de que sea la correcta. Y comparten la misma limitación: funcionan porque los subtes se extienden de manera radial o lineal. Alcanzó con estirarla hacia Retiro, para que el vecino más cercano se perdiera. La distancia a la cabecera y PCA se rompen igual en cuanto la traza dobla sobre sí misma. Y la E muestra que ni siquiera las cabeceras son seguras: el par más lejano es Plaza de los Virreyes y Catalinas, no Retiro.</span>
-<span id="cb32-556"><a href="#cb32-556" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-557"><a href="#cb32-557" aria-hidden="true" tabindex="-1"></a>Con esos cuidados, la pregunta del bar tiene una primera respuesta. Ordenando cada línea con el vecino más cercano desde la cabecera correcta, la distancia promedio entre estaciones consecutivas es de **`r num(mean(tramos$distancia_m))` m**. El tramo más corto está entre <span class="in">`r tramo_min$desde`</span> y <span class="in">`r tramo_min$hasta`</span> (línea <span class="in">`r tramo_min$linea`</span>, <span class="in">`r num(tramo_min$distancia_m)`</span> m) y el más largo entre <span class="in">`r tramo_max$desde`</span> y <span class="in">`r tramo_max$hasta`</span> (línea <span class="in">`r tramo_max$linea`</span>, <span class="in">`r num(tramo_max$distancia_m)`</span> m). La línea con las estaciones más juntas es la <span class="in">`r linea_junta$linea`</span> (<span class="in">`r num(linea_junta$media_m)`</span> m en promedio) y la más espaciada, la <span class="in">`r linea_lejos$linea`</span> (<span class="in">`r num(linea_lejos$media_m)`</span> m).</span>
-<span id="cb32-558"><a href="#cb32-558" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-559"><a href="#cb32-559" aria-hidden="true" tabindex="-1"></a>La solución, para todas las líneas: el vecino más cercano de la prueba 4, arrancando desde la segunda cabecera del par más lejano.</span>
-<span id="cb32-560"><a href="#cb32-560" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-563"><a href="#cb32-563" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb32-564"><a href="#cb32-564" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: solucion</span></span>
-<span id="cb32-565"><a href="#cb32-565" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-566"><a href="#cb32-566" aria-hidden="true" tabindex="-1"></a>vecino_desde_cabecera_2 <span class="ot">&lt;-</span> <span class="cf">function</span>(datos) {</span>
-<span id="cb32-567"><a href="#cb32-567" aria-hidden="true" tabindex="-1"></a>  d <span class="ot">&lt;-</span> units<span class="sc">::</span><span class="fu">drop_units</span>(<span class="fu">st_distance</span>(datos))</span>
-<span id="cb32-568"><a href="#cb32-568" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(d)</span>
-<span id="cb32-569"><a href="#cb32-569" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-570"><a href="#cb32-570" aria-hidden="true" tabindex="-1"></a>  cabeceras <span class="ot">&lt;-</span> <span class="fu">which</span>(d <span class="sc">==</span> <span class="fu">max</span>(d), <span class="at">arr.ind =</span> <span class="cn">TRUE</span>)[<span class="dv">1</span>, ]</span>
-<span id="cb32-571"><a href="#cb32-571" aria-hidden="true" tabindex="-1"></a>  recorrido <span class="ot">&lt;-</span> cabeceras[<span class="dv">2</span>]</span>
+<span id="cb32-549"><a href="#cb32-549" aria-hidden="true" tabindex="-1"></a><span class="fu">mapa_orden</span>(linea_h_p5, <span class="st">"Prueba 5: PCA"</span>, <span class="at">etiqueta =</span> <span class="st">"estacion"</span>)</span>
+<span id="cb32-550"><a href="#cb32-550" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-551"><a href="#cb32-551" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-552"><a href="#cb32-552" aria-hidden="true" tabindex="-1"></a>**Es elegante** y no necesita saber dónde están las cabeceras. Pero sufre la misma limitación que la prueba 3: si la línea dobla, dos estaciones pueden proyectarse casi en el mismo punto del eje aunque estén lejos en el recorrido. </span>
+<span id="cb32-553"><a href="#cb32-553" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-554"><a href="#cb32-554" aria-hidden="true" tabindex="-1"></a><span class="fu">## ¿Y entonces?</span></span>
+<span id="cb32-555"><a href="#cb32-555" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-556"><a href="#cb32-556" aria-hidden="true" tabindex="-1"></a>Cinco pruebas y una sola línea. Confiar en el orden del dataset fue lo único que falló de entrada. Las cabeceras salieron del máximo de la matriz de distancias, y para las estaciones del medio la distancia a una cabecera y el vecino más cercano devolvieron el recorrido de la H sin problemas. PCA llega a lo mismo por otro camino. </span>
+<span id="cb32-557"><a href="#cb32-557" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-558"><a href="#cb32-558" aria-hidden="true" tabindex="-1"></a>Las tres son lo que se llama <span class="co">[</span><span class="ot">heurísticas</span><span class="co">](https://es.wikipedia.org/wiki/Heur%C3%ADstica#La_heur%C3%ADstica_como_metodolog%C3%ADa_cient%C3%ADfica)</span>: atajos razonables que suelen dar una buena respuesta, sin garantía de que sea la correcta. Y comparten la misma limitación: funcionan porque los subtes se extienden de manera radial o lineal. Alcanzó con estirarla hacia Retiro, para que el vecino más cercano se perdiera. La distancia a la cabecera y PCA se rompen igual en cuanto la traza dobla sobre sí misma. Y la E muestra que ni siquiera las cabeceras son seguras: el par más lejano es Plaza de los Virreyes y Catalinas, no Retiro.</span>
+<span id="cb32-559"><a href="#cb32-559" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-560"><a href="#cb32-560" aria-hidden="true" tabindex="-1"></a>Con esos cuidados, la pregunta del bar tiene una primera respuesta. Ordenando cada línea con el vecino más cercano desde la cabecera correcta, la distancia promedio entre estaciones consecutivas es de **`r num(mean(tramos$distancia_m))` m**. El tramo más corto está entre <span class="in">`r tramo_min$desde`</span> y <span class="in">`r tramo_min$hasta`</span> (línea <span class="in">`r tramo_min$linea`</span>, <span class="in">`r num(tramo_min$distancia_m)`</span> m) y el más largo entre <span class="in">`r tramo_max$desde`</span> y <span class="in">`r tramo_max$hasta`</span> (línea <span class="in">`r tramo_max$linea`</span>, <span class="in">`r num(tramo_max$distancia_m)`</span> m). La línea con las estaciones más juntas es la <span class="in">`r linea_junta$linea`</span> (<span class="in">`r num(linea_junta$media_m)`</span> m en promedio) y la más espaciada, la <span class="in">`r linea_lejos$linea`</span> (<span class="in">`r num(linea_lejos$media_m)`</span> m).</span>
+<span id="cb32-561"><a href="#cb32-561" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-562"><a href="#cb32-562" aria-hidden="true" tabindex="-1"></a>La solución, para todas las líneas: el vecino más cercano de la prueba 4, arrancando desde la segunda cabecera del par más lejano.</span>
+<span id="cb32-563"><a href="#cb32-563" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-566"><a href="#cb32-566" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-567"><a href="#cb32-567" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: solucion</span></span>
+<span id="cb32-568"><a href="#cb32-568" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-569"><a href="#cb32-569" aria-hidden="true" tabindex="-1"></a>vecino_desde_cabecera_2 <span class="ot">&lt;-</span> <span class="cf">function</span>(datos) {</span>
+<span id="cb32-570"><a href="#cb32-570" aria-hidden="true" tabindex="-1"></a>  d <span class="ot">&lt;-</span> units<span class="sc">::</span><span class="fu">drop_units</span>(<span class="fu">st_distance</span>(datos))</span>
+<span id="cb32-571"><a href="#cb32-571" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(d)</span>
 <span id="cb32-572"><a href="#cb32-572" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-573"><a href="#cb32-573" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (paso <span class="cf">in</span> <span class="fu">seq_len</span>(n <span class="sc">-</span> <span class="dv">1</span>)) {</span>
-<span id="cb32-574"><a href="#cb32-574" aria-hidden="true" tabindex="-1"></a>    actual     <span class="ot">&lt;-</span> recorrido[<span class="fu">length</span>(recorrido)]</span>
-<span id="cb32-575"><a href="#cb32-575" aria-hidden="true" tabindex="-1"></a>    candidatos <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">seq_len</span>(n), recorrido)</span>
-<span id="cb32-576"><a href="#cb32-576" aria-hidden="true" tabindex="-1"></a>    siguiente  <span class="ot">&lt;-</span> candidatos[<span class="fu">which.min</span>(d[actual, candidatos])]</span>
-<span id="cb32-577"><a href="#cb32-577" aria-hidden="true" tabindex="-1"></a>    recorrido  <span class="ot">&lt;-</span> <span class="fu">c</span>(recorrido, siguiente)</span>
-<span id="cb32-578"><a href="#cb32-578" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb32-579"><a href="#cb32-579" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-580"><a href="#cb32-580" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(datos, recorrido)</span>
-<span id="cb32-581"><a href="#cb32-581" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-573"><a href="#cb32-573" aria-hidden="true" tabindex="-1"></a>  cabeceras <span class="ot">&lt;-</span> <span class="fu">which</span>(d <span class="sc">==</span> <span class="fu">max</span>(d), <span class="at">arr.ind =</span> <span class="cn">TRUE</span>)[<span class="dv">1</span>, ]</span>
+<span id="cb32-574"><a href="#cb32-574" aria-hidden="true" tabindex="-1"></a>  recorrido <span class="ot">&lt;-</span> cabeceras[<span class="dv">2</span>]</span>
+<span id="cb32-575"><a href="#cb32-575" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-576"><a href="#cb32-576" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (paso <span class="cf">in</span> <span class="fu">seq_len</span>(n <span class="sc">-</span> <span class="dv">1</span>)) {</span>
+<span id="cb32-577"><a href="#cb32-577" aria-hidden="true" tabindex="-1"></a>    actual     <span class="ot">&lt;-</span> recorrido[<span class="fu">length</span>(recorrido)]</span>
+<span id="cb32-578"><a href="#cb32-578" aria-hidden="true" tabindex="-1"></a>    candidatos <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">seq_len</span>(n), recorrido)</span>
+<span id="cb32-579"><a href="#cb32-579" aria-hidden="true" tabindex="-1"></a>    siguiente  <span class="ot">&lt;-</span> candidatos[<span class="fu">which.min</span>(d[actual, candidatos])]</span>
+<span id="cb32-580"><a href="#cb32-580" aria-hidden="true" tabindex="-1"></a>    recorrido  <span class="ot">&lt;-</span> <span class="fu">c</span>(recorrido, siguiente)</span>
+<span id="cb32-581"><a href="#cb32-581" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb32-582"><a href="#cb32-582" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-583"><a href="#cb32-583" aria-hidden="true" tabindex="-1"></a>red_ordenada <span class="ot">&lt;-</span> estaciones <span class="sc">%&gt;%</span></span>
-<span id="cb32-584"><a href="#cb32-584" aria-hidden="true" tabindex="-1"></a>  <span class="fu">split</span>(.<span class="sc">$</span>linea) <span class="sc">%&gt;%</span></span>
-<span id="cb32-585"><a href="#cb32-585" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(vecino_desde_cabecera_2) <span class="sc">%&gt;%</span></span>
-<span id="cb32-586"><a href="#cb32-586" aria-hidden="true" tabindex="-1"></a>  <span class="fu">do.call</span>(rbind, .)</span>
-<span id="cb32-587"><a href="#cb32-587" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb32-588"><a href="#cb32-588" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-591"><a href="#cb32-591" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb32-592"><a href="#cb32-592" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-red-ordenada</span></span>
-<span id="cb32-593"><a href="#cb32-593" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "La red reconstruida usando sólo distancias entre estaciones, con el vecino más cercano."</span></span>
-<span id="cb32-594"><a href="#cb32-594" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
-<span id="cb32-595"><a href="#cb32-595" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb32-596"><a href="#cb32-596" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "Código del mapa"</span></span>
-<span id="cb32-597"><a href="#cb32-597" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-598"><a href="#cb32-598" aria-hidden="true" tabindex="-1"></a>red_ordenada <span class="sc">%&gt;%</span></span>
-<span id="cb32-599"><a href="#cb32-599" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">st_coordinates</span>(geometry)[, <span class="dv">1</span>], <span class="at">y =</span> <span class="fu">st_coordinates</span>(geometry)[, <span class="dv">2</span>]) <span class="sc">%&gt;%</span></span>
-<span id="cb32-600"><a href="#cb32-600" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb32-601"><a href="#cb32-601" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y, <span class="at">color =</span> linea, <span class="at">group =</span> linea)) <span class="sc">+</span></span>
-<span id="cb32-602"><a href="#cb32-602" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">linewidth =</span> <span class="fl">1.4</span>) <span class="sc">+</span></span>
-<span id="cb32-603"><a href="#cb32-603" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb32-604"><a href="#cb32-604" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> COLORES_LINEAS) <span class="sc">+</span></span>
-<span id="cb32-605"><a href="#cb32-605" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
-<span id="cb32-606"><a href="#cb32-606" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">color =</span> <span class="st">"Línea"</span>) <span class="sc">+</span></span>
-<span id="cb32-607"><a href="#cb32-607" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tema_subte</span>() <span class="sc">+</span></span>
-<span id="cb32-608"><a href="#cb32-608" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_blank</span>(), <span class="at">legend.position =</span> <span class="st">"right"</span>)</span>
-<span id="cb32-609"><a href="#cb32-609" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb32-610"><a href="#cb32-610" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-611"><a href="#cb32-611" aria-hidden="true" tabindex="-1"></a>Pero ese número depende de haber elegido bien desde dónde arrancar. Para no depender de eso necesito un método que no asuma que la línea es recta, y resulta que ese problema ya tiene nombre: el del viajante. Queda para la próxima.</span>
-<span id="cb32-612"><a href="#cb32-612" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-613"><a href="#cb32-613" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb32-614"><a href="#cb32-614" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-615"><a href="#cb32-615" aria-hidden="true" tabindex="-1"></a>*Código y datos: [github.com/jpcib/subte_estaciones](https://github.com/jpcib/subte_estaciones). Fuente: [Buenos Aires Data](https://data.buenosaires.gob.ar/), estaciones de subte.*</span>
+<span id="cb32-583"><a href="#cb32-583" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(datos, recorrido)</span>
+<span id="cb32-584"><a href="#cb32-584" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-585"><a href="#cb32-585" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-586"><a href="#cb32-586" aria-hidden="true" tabindex="-1"></a>red_ordenada <span class="ot">&lt;-</span> estaciones <span class="sc">%&gt;%</span></span>
+<span id="cb32-587"><a href="#cb32-587" aria-hidden="true" tabindex="-1"></a>  <span class="fu">split</span>(.<span class="sc">$</span>linea) <span class="sc">%&gt;%</span></span>
+<span id="cb32-588"><a href="#cb32-588" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(vecino_desde_cabecera_2) <span class="sc">%&gt;%</span></span>
+<span id="cb32-589"><a href="#cb32-589" aria-hidden="true" tabindex="-1"></a>  <span class="fu">do.call</span>(rbind, .)</span>
+<span id="cb32-590"><a href="#cb32-590" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-591"><a href="#cb32-591" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-594"><a href="#cb32-594" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-595"><a href="#cb32-595" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-red-ordenada</span></span>
+<span id="cb32-596"><a href="#cb32-596" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "La red reconstruida usando sólo distancias entre estaciones, con el vecino más cercano."</span></span>
+<span id="cb32-597"><a href="#cb32-597" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
+<span id="cb32-598"><a href="#cb32-598" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb32-599"><a href="#cb32-599" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "Código del mapa"</span></span>
+<span id="cb32-600"><a href="#cb32-600" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-601"><a href="#cb32-601" aria-hidden="true" tabindex="-1"></a>red_ordenada <span class="sc">%&gt;%</span></span>
+<span id="cb32-602"><a href="#cb32-602" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">st_coordinates</span>(geometry)[, <span class="dv">1</span>], <span class="at">y =</span> <span class="fu">st_coordinates</span>(geometry)[, <span class="dv">2</span>]) <span class="sc">%&gt;%</span></span>
+<span id="cb32-603"><a href="#cb32-603" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb32-604"><a href="#cb32-604" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y, <span class="at">color =</span> linea, <span class="at">group =</span> linea)) <span class="sc">+</span></span>
+<span id="cb32-605"><a href="#cb32-605" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">linewidth =</span> <span class="fl">1.4</span>) <span class="sc">+</span></span>
+<span id="cb32-606"><a href="#cb32-606" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb32-607"><a href="#cb32-607" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> COLORES_LINEAS) <span class="sc">+</span></span>
+<span id="cb32-608"><a href="#cb32-608" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
+<span id="cb32-609"><a href="#cb32-609" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">color =</span> <span class="st">"Línea"</span>) <span class="sc">+</span></span>
+<span id="cb32-610"><a href="#cb32-610" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tema_subte</span>() <span class="sc">+</span></span>
+<span id="cb32-611"><a href="#cb32-611" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_blank</span>(), <span class="at">legend.position =</span> <span class="st">"right"</span>)</span>
+<span id="cb32-612"><a href="#cb32-612" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-613"><a href="#cb32-613" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-614"><a href="#cb32-614" aria-hidden="true" tabindex="-1"></a>Pero ese número depende de haber elegido bien desde dónde arrancar. Para no depender de eso necesito un método que no asuma que la línea es recta, y resulta que ese problema ya tiene nombre: el del viajante. Queda para la próxima.</span>
+<span id="cb32-615"><a href="#cb32-615" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-616"><a href="#cb32-616" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb32-617"><a href="#cb32-617" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-618"><a href="#cb32-618" aria-hidden="true" tabindex="-1"></a>*Código y datos: [github.com/jpcib/subte_estaciones](https://github.com/jpcib/subte_estaciones). Fuente: [Buenos Aires Data](https://data.buenosaires.gob.ar/), estaciones de subte.*</span>
 </code></pre></div><button title="Copiar al portapapeles" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
