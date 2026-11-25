@@ -1,0 +1,1061 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Blog · Juan Cib</title>
+<link>https://blog.juancib.ar/</link>
+<atom:link href="https://blog.juancib.ar/index.xml" rel="self" type="application/rss+xml"/>
+<description>Análisis de datos, R y geografía, con el proceso a la vista.</description>
+<generator>quarto-1.8.27</generator>
+<lastBuildDate>Thu, 08 Oct 2026 03:00:00 GMT</lastBuildDate>
+<item>
+  <title>Cómo complicar un problema sencillo</title>
+  <dc:creator>Juan Cibantos</dc:creator>
+  <link>https://blog.juancib.ar/posts/2026-11-25-sobrepensar-el-subte/</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>TL;DR
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>El dataset oficial de estaciones de subte <strong>no viene ordenado</strong> según el recorrido de cada línea, así que calcular “la distancia entre una estación y la siguiente” no es tan directo como parece.</li>
+<li>Con <strong>sólo las distancias entre estaciones</strong>, sin otra información, se puede reconstruir el orden: las cabeceras deberían ser el par más lejano.</li>
+<li>Los atajos (ordenar por distancia a una cabecera, el vecino más cercano, PCA) funcionan en cuando la línea se mantiene relativamente recta y fallan cuando dobla o dos estaciones no consecutivas se acercan demasiado.</li>
+<li>Las cabeceras no siempre son el par más lejano: en la E, Catalinas está más lejos de Plaza de los Virreyes que Retiro, la cabecera real.</li>
+<li>Ordenando cada línea con el vecino más cercano desde la cabecera correcta, la distancia media entre estaciones consecutivas es de <strong>654 m</strong>. El tramo más corto está entre PASCO y ALBERTI (línea A, 256 m) y el más largo entre FEDERICO LACROZE y TRONADOR - VILLA ORTÚZAR (línea B, 1.084 m).</li>
+<li>El <a href="https://cdn.buenosaires.gob.ar/datosabiertos/datasets/sbase/subte-estaciones/red_subte.geojson">dataset de líneas</a> tiene los segmentos individuales y medirlas es objetivamente la manera más sencilla resolverlo, este ejercicio busca explorar algunos algoritmos sencillos para resolver problemas geográficos.</li>
+</ul>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-zigzag" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-zigzag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://blog.juancib.ar/posts/2026-11-25-sobrepensar-el-subte/index_files/figure-html/fig-zigzag-1.png" class="img-fluid figure-img" width="1050">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-zigzag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Todas las líneas, uniendo las estaciones en el orden de las filas del dataset.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="el-problema" class="level2">
+<h2 class="anchored" data-anchor-id="el-problema">El problema</h2>
+<p><strong>¿Cuál es la mejor línea de subte de la ciudad?</strong>.</p>
+<p>La respuesta es sencilla, la línea E, por muchísimos motivos que aún no están preparados para escuchar. Ahora bien, hay muchos puntos que podemos analizar para responder a esa pregunta de manera más o menos objetiva, y si recientemente te encontraste con una estación cerrada y decidir si caminar a la siguiente, hoy vamos a sobre complejizar cuanto en promedio te tocaría caminar.</p>
+<p>La pregunta es inocente: <strong>¿cuál es la distancia promedio entre estaciones del subte de Buenos Aires?</strong> La Ciudad publica <a href="https://data.buenosaires.gob.ar/dataset/subte-estaciones">un dataset con la ubicación de cada estación</a> en Buenos Aires Data, así que debería ser cuestión de bajarlo, calcular distancias entre estaciones consecutivas y promediar.</p>
+<p><code>sf::read_sf()</code> lee el GeoJSON directo desde la URL, sin descargarlo antes:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">url_estaciones <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://cdn.buenosaires.gob.ar/datosabiertos/datasets/sbase/subte-estaciones/estaciones-de-subte.geojson"</span></span>
+<span id="cb1-2"></span>
+<span id="cb1-3">estaciones_crudas <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read_sf</span>(url_estaciones) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb1-4">  janitor<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">clean_names</span>()   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ID, ESTACION, LINEA -&gt; id, estacion, linea</span></span>
+<span id="cb1-5"></span>
+<span id="cb1-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">glimpse</span>(estaciones_crudas)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 90
+Columns: 4
+$ id       &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18…
+$ estacion &lt;chr&gt; "CASEROS", "INCLAN - MEZQUITA AL AHMAD", "HUMBERTO 1°", "VENE…
+$ linea    &lt;chr&gt; "H", "H", "H", "H", "H", "D", "D", "D", "D", "D", "D", "D", "…
+$ geometry &lt;POINT [°]&gt; POINT (-58.39893 -34.63575), POINT (-58.40097 -34.62938…</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_crs</span>(estaciones_crudas)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>input</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "WGS 84"</code></pre>
+</div>
+</div>
+<p>Hay un <code>id</code>, el nombre de la estación, la línea y un punto. Para que el ejemplo sea manejable arranco con una sola línea, la <strong>H</strong>, y después generalizo.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Concepto: CRS, o por qué reproyectar antes de medir
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Las coordenadas vienen en <strong>WGS84</strong> (EPSG:4326): latitud y longitud en grados. Un grado de longitud no mide lo mismo en Buenos Aires que en el ecuador, así que restar coordenadas “a mano” no da metros.</p>
+<p><code>sf</code> resuelve esto de dos maneras:</p>
+<ul>
+<li>Con coordenadas geográficas, <code>st_distance()</code> usa la librería <strong>s2</strong> y calcula distancias sobre la esfera.</li>
+<li>Con un CRS <strong>proyectado</strong>, las coordenadas ya están en metros y la distancia es la euclidiana de toda la vida.</li>
+</ul>
+<p>Para todo el post reproyecto a <strong>POSGAR 2007 / Argentina faja 5</strong> (EPSG:5347), el sistema que corresponde para esta parte del país. A la escala de una ciudad, la diferencia entre ambos métodos es mínima (abajo la comparo), pero trabajar en metros simplifica todo lo que viene después, en particular PCA.</p>
+</div>
+</div>
+</div>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">estaciones <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> estaciones_crudas <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb5-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_transform</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5347</span>)   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># POSGAR 2007 / Argentina faja 5, en metros</span></span>
+<span id="cb5-3"></span>
+<span id="cb5-4">linea_h <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> estaciones <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb5-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">filter</span>(linea <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"H"</span>)</span>
+<span id="cb5-6"></span>
+<span id="cb5-7">linea_h <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb5-8">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_drop_geometry</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb5-9">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">select</span>(id, estacion)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 2
+      id estacion                             
+   &lt;dbl&gt; &lt;chr&gt;                                
+ 1     1 CASEROS                              
+ 2     2 INCLAN - MEZQUITA AL AHMAD           
+ 3     3 HUMBERTO 1°                          
+ 4     4 VENEZUELA                            
+ 5     5 ONCE - 30 DE DICIEMBRE               
+ 6    77 CORRIENTES                           
+ 7    78 PARQUE PATRICIOS                     
+ 8    79 HOSPITALES                           
+ 9    84 CÓRDOBA                              
+10    85 LAS HERAS                            
+11    86 SANTA FE - CARLOS JAUREGUI           
+12    87 FACULTAD DE DERECHO - JULIETA LANTERI</code></pre>
+</div>
+</div>
+<section id="prueba-1-confiar-en-el-orden-del-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="prueba-1-confiar-en-el-orden-del-dataset">Prueba 1: confiar en el orden del dataset</h3>
+<p>Asumo que las filas y el id replican el orden del recorrido y mido de cada una a la siguiente.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">n <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">nrow</span>(linea_h)</span>
+<span id="cb7-2"></span>
+<span id="cb7-3">dist_ingenua <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_distance</span>(</span>
+<span id="cb7-4">  linea_h<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>geometry[<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>n],</span>
+<span id="cb7-5">  linea_h<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>geometry[<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>],</span>
+<span id="cb7-6">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">by_element =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span></span>
+<span id="cb7-7">)</span>
+<span id="cb7-8"></span>
+<span id="cb7-9"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mean</span>(dist_ingenua)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>1520.76 [m]</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sum</span>(dist_ingenua)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>16728.36 [m]</code></pre>
+</div>
+</div>
+<p>Dibujarlo es la forma más rápida de saber si el número tiene sentido: uno las estaciones en el orden en que aparecen en la tabla.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mapa_orden</span>(linea_h, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Prueba 1: el orden del dataset"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">etiqueta =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"estacion"</span>)</span></code></pre></div></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-prueba-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prueba-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://blog.juancib.ar/posts/2026-11-25-sobrepensar-el-subte/index_files/figure-html/fig-prueba-1-1.png" class="img-fluid figure-img" width="1050">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prueba-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Línea H, uniendo las estaciones en el orden de las filas del dataset.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>El <code>id</code> no sigue el recorrido</strong>, así que el promedio “ingenuo” mezcla saltos entre estaciones que no son vecinas. Y si bien hubiese sido una gran adición para <a href="https://accidental-art.tumblr.com/">Accidental aRt</a>, (que descanse en paz), <strong>antes de medir, tendremos que ordenar</strong>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>De paso: ¿cuánto cambia medir en grados vs en metros?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">linea_h_wgs84 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_transform</span>(linea_h, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4326</span>)</span>
+<span id="cb12-2"></span>
+<span id="cb12-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">tibble</span>(</span>
+<span id="cb12-4">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">esfera_s2  =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sum</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_distance</span>(linea_h_wgs84<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>geometry[<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>n], linea_h_wgs84<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>geometry[<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">by_element =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)),</span>
+<span id="cb12-5">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plano_5347 =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sum</span>(dist_ingenua)</span>
+<span id="cb12-6">) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb12-7">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">diferencia_pct =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">as.numeric</span>((plano_5347 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> esfera_s2) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> esfera_s2 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>))</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  esfera_s2 plano_5347 diferencia_pct
+        [m]        [m]          &lt;dbl&gt;
+1    16754.     16728.         -0.155</code></pre>
+</div>
+</div>
+<p>A esta escala, si bien todavía la distancia no es la real (ya quisiéramos, es la mitad), la diferencia es despreciable.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="primera-idea-las-cabeceras" class="level2">
+<h2 class="anchored" data-anchor-id="primera-idea-las-cabeceras">Primera idea: las cabeceras</h2>
+<p>Si no tengo el orden, ¿qué tengo? Las <strong>distancias entre todas las estaciones</strong>. Y hay algo que esas distancias tienen que cumplir en cualquier línea más o menos recta: <strong>las dos estaciones más lejanas entre sí son las puntas</strong>.</p>
+<section id="prueba-2-el-máximo-de-la-matriz-de-distancias" class="level3">
+<h3 class="anchored" data-anchor-id="prueba-2-el-máximo-de-la-matriz-de-distancias">Prueba 2: el máximo de la matriz de distancias</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1">distancias <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> units<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">drop_units</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_distance</span>(linea_h))</span>
+<span id="cb14-2"></span>
+<span id="cb14-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dim</span>(distancias)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 12 12</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(distancias[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>])</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      1    2    3    4    5    6    7    8    9   10   11   12
+1     0  732 1439 2337 3046 3520  695 1378 4162 5361 4585 5894
+2   732    0  708 1606 2315 2792 1095 1685 3440 4664 3869 5222
+3  1439  708    0  899 1607 2084 1729 2218 2737 3981 3170 4564
+4  2337 1606  899    0  710 1195 2572 2972 1865 3159 2309 3789
+5  3046 2315 1607  710    0  496 3270 3635 1182 2516 1634 3187
+6  3520 2792 2084 1195  496    0 3764 4130  688 2035 1141 2724
+7   695 1095 1729 2572 3270 3764    0  683 4437 5707 4879 6292
+8  1378 1685 2218 2972 3635 4130  683    0 4817 6131 5267 6752
+9  4162 3440 2737 1865 1182  688 4437 4817    0 1358  453 2070
+10 5361 4664 3981 3159 2516 2035 5707 6131 1358    0  916  751
+11 4585 3869 3170 2309 1634 1141 4879 5267  453  916    0 1647
+12 5894 5222 4564 3789 3187 2724 6292 6752 2070  751 1647    0</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Concepto: la matriz de distancias
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>st_distance(x)</code> con un solo argumento devuelve una matriz de <img src="https://latex.codecogs.com/png.latex?n%20%5Ctimes%20n"> donde la celda <img src="https://latex.codecogs.com/png.latex?(i,%20j)"> es la distancia entre la estación <img src="https://latex.codecogs.com/png.latex?i"> y la <img src="https://latex.codecogs.com/png.latex?j">. Tiene dos propiedades que conviene tener presentes:</p>
+<ul>
+<li><strong>Diagonal en cero</strong>: la distancia de una estación a sí misma.</li>
+<li><strong>Simetría</strong>: <img src="https://latex.codecogs.com/png.latex?d(i,%20j)%20=%20d(j,%20i)">. Toda la información está en el triángulo superior (o en el inferior).</li>
+</ul>
+<p>La simetría tiene una consecuencia práctica inmediata, como se ve en la próxima prueba.</p>
+</div>
+</div>
+</div>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">which</span>(distancias <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">max</span>(distancias), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">arr.ind =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   row col
+12  12   8
+8    8  12</code></pre>
+</div>
+</div>
+<p>Aparecen <strong>dos filas</strong>, porque el máximo está una vez en <img src="https://latex.codecogs.com/png.latex?(i,%20j)"> y otra en <img src="https://latex.codecogs.com/png.latex?(j,%20i)">. Los dos índices de una de esas filas son las dos cabeceras.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1">indices_cabeceras <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">which</span>(distancias <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">max</span>(distancias), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">arr.ind =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, ]</span>
+<span id="cb20-2"></span>
+<span id="cb20-3">linea_h <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb20-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">slice</span>(indices_cabeceras)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 2 features and 3 fields
+Geometry type: POINT
+Dimension:     XY
+Bounding box:  xmin: 5645567 ymin: 6166024 xmax: 5647629 ymax: 6172453
+Projected CRS: POSGAR 2007 / Argentina 5
+# A tibble: 2 × 4
+     id estacion                              linea          geometry
+  &lt;dbl&gt; &lt;chr&gt;                                 &lt;chr&gt;       &lt;POINT [m]&gt;
+1    87 FACULTAD DE DERECHO - JULIETA LANTERI H     (5647629 6172453)
+2    79 HOSPITALES                            H     (5645567 6166024)</code></pre>
+</div>
+</div>
+<p><strong>Funciona.</strong> Facultad de Derecho y Hospitales son las cabeceras de la H. Con las puntas identificadas, falta ordenar las del medio.</p>
+</section>
+</section>
+<section id="y-las-del-medio" class="level2">
+<h2 class="anchored" data-anchor-id="y-las-del-medio">¿Y las del medio?</h2>
+<section id="prueba-3-ordenar-por-distancia-a-una-cabecera" class="level3">
+<h3 class="anchored" data-anchor-id="prueba-3-ordenar-por-distancia-a-una-cabecera">Prueba 3: ordenar por distancia a una cabecera</h3>
+<p>La idea más simple que se me ocurre es ordenar todas las estaciones según qué tan lejos están de una cabecera: la más cercana va segunda, la que sigue tercera, etc.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1">inicio <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> indices_cabeceras[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>]   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Hospitales: recorro de sur a norte</span></span>
+<span id="cb22-2"></span>
+<span id="cb22-3">linea_h_p3 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> linea_h <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb22-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">slice</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">order</span>(distancias[inicio, ]))</span></code></pre></div></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mapa_orden</span>(linea_h_p3, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Prueba 3: distancia a una cabecera"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">etiqueta =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"estacion"</span>)</span></code></pre></div></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-prueba-3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prueba-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://blog.juancib.ar/posts/2026-11-25-sobrepensar-el-subte/index_files/figure-html/fig-prueba-3-1.png" class="img-fluid figure-img" width="1050">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prueba-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: Prueba 3: ordenar por distancia a una cabecera.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Funciona!</strong> En un tramo relativamente recto anda perfecto, útil para las líneas de la Ciudad. Pero la distancia a la cabecera es una distancia <strong>en línea recta</strong>, y si dos estaciones intermedias no consecutivas se acercaran, por ejemplo debido a una curva muy pronunciada, produciría resultados erróneos.</p>
+</section>
+<section id="prueba-4-el-vecino-más-cercano" class="level3">
+<h3 class="anchored" data-anchor-id="prueba-4-el-vecino-más-cercano">Prueba 4: el vecino más cercano</h3>
+<p>En lugar de mirar siempre la cabecera, avanzo <strong>paso a paso</strong>: desde la estación actual, voy a la más cercana que todavía no visité.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1">recorrido <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> inicio</span>
+<span id="cb24-2"></span>
+<span id="cb24-3"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> (paso <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">seq_len</span>(n <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)) {</span>
+<span id="cb24-4">  actual     <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> recorrido[<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">length</span>(recorrido)]</span>
+<span id="cb24-5">  candidatos <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setdiff</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">seq_len</span>(n), recorrido)</span>
+<span id="cb24-6">  siguiente  <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> candidatos[<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">which.min</span>(distancias[actual, candidatos])]</span>
+<span id="cb24-7">  recorrido  <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(recorrido, siguiente)</span>
+<span id="cb24-8">}</span>
+<span id="cb24-9"></span>
+<span id="cb24-10">linea_h_p4 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">slice</span>(linea_h, recorrido)</span></code></pre></div></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mapa_orden</span>(linea_h_p4, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Prueba 4: vecino más cercano"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">etiqueta =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"estacion"</span>)</span></code></pre></div></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-prueba-4" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prueba-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://blog.juancib.ar/posts/2026-11-25-sobrepensar-el-subte/index_files/figure-html/fig-prueba-4-1.png" class="img-fluid figure-img" width="1050">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prueba-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4: Prueba 4: vecino más cercano desde una cabecera.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Es más robusto</strong>, porque cada decisión es local. Pero es un algoritmo <strong>greedy</strong> (goloso) que nunca vuelve atrás. Si en algún paso dos estaciones están casi a la misma distancia y elige “mal”, puede saltearse una y tener que volver a buscarla al final, con un salto largo.</p>
+<p>Para ver exactamente dónde falla, en la imágen de la derecha agrego dos estaciones que simulan,con una curva exagerada, la extensión nunca finalizada de la traza a retiro y el “plan” de la estación Padre Mugica en el barrio 31.</p>
+<div id="fig-prueba-4-pasos" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prueba-4-pasos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-prueba-4-pasos" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-prueba-4-pasos-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-prueba-4-pasos-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://blog.juancib.ar/posts/2026-11-25-sobrepensar-el-subte/index_files/figure-html/vecino-h-real.gif" class="img-fluid figure-img" data-ref-parent="fig-prueba-4-pasos">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-prueba-4-pasos-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Línea H real.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-prueba-4-pasos" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-prueba-4-pasos-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-prueba-4-pasos-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://blog.juancib.ar/posts/2026-11-25-sobrepensar-el-subte/index_files/figure-html/vecino-h-ficticias.gif" class="img-fluid figure-img" data-ref-parent="fig-prueba-4-pasos">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-prueba-4-pasos-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Con dos estaciones ficticias al sur de Facultad de Derecho: el gancho confunde al algoritmo.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prueba-4-pasos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5: Vecino más cercano paso a paso, desde Hospitales.
+</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Advertencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Este algoritmo depende de que las cabeceras efectivamente sean las más lejanas y de elegir la correcta. Me di cuenta (tarde) de que en la línea E, Retiro está más cerca de Plaza de los Virreyes que Catalinas: si arrancamos desde Catalinas, hay un salto.</p>
+</div>
+</div>
+<div id="fig-prueba-4-linea-e" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prueba-4-linea-e-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-prueba-4-linea-e" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-prueba-4-linea-e-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-prueba-4-linea-e-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://blog.juancib.ar/posts/2026-11-25-sobrepensar-el-subte/index_files/figure-html/vecino-e-cabecera-2.gif" class="img-fluid figure-img" data-ref-parent="fig-prueba-4-linea-e">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-prueba-4-linea-e-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Desde Plaza de los Virreyes: recorre la línea entera.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-prueba-4-linea-e" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-prueba-4-linea-e-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-prueba-4-linea-e-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://blog.juancib.ar/posts/2026-11-25-sobrepensar-el-subte/index_files/figure-html/vecino-e-cabecera-1.gif" class="img-fluid figure-img" data-ref-parent="fig-prueba-4-linea-e">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-prueba-4-linea-e-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Desde Catalinas: le queda una estación varada y termina con un salto.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prueba-4-linea-e-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6: Línea E: el mismo algoritmo, arrancando desde cada punta del par más lejano.
+</figcaption>
+</figure>
+</div>
+<p>Para <a href="https://stemlounge.com/animated-algorithms-for-the-traveling-salesman-problem/">otros ejemplos gráficos</a> de como funciona este algoritmo, y por qué si bien es rápido, <strong>no es el adecuado para este problema</strong>.</p>
+</section>
+<section id="prueba-5-pca" class="level3">
+<h3 class="anchored" data-anchor-id="prueba-5-pca">Prueba 5: PCA</h3>
+<p>Otra forma de pensarlo: si la línea es aproximadamente recta, existe una <strong>dirección</strong> sobre la que se extiende. El análisis de componentes principales (PCA) encuentra justamente esa dirección, la de mayor varianza. Proyecto cada estación sobre ese eje y ordeno por la proyección.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1">coords <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_coordinates</span>(linea_h)</span>
+<span id="cb26-2">pca <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">prcomp</span>(coords)</span>
+<span id="cb26-3"></span>
+<span id="cb26-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">summary</span>(pca)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>importance</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                              PC1       PC2
+Standard deviation     2269.26218 395.60263
+Proportion of Variance    0.97051   0.02949
+Cumulative Proportion     0.97051   1.00000</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1">linea_h_p5 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">slice</span>(linea_h, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">order</span>(pca<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>x[, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]))</span></code></pre></div></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mapa_orden</span>(linea_h_p5, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Prueba 5: PCA"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">etiqueta =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"estacion"</span>)</span></code></pre></div></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-prueba-5" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prueba-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://blog.juancib.ar/posts/2026-11-25-sobrepensar-el-subte/index_files/figure-html/fig-prueba-5-1.png" class="img-fluid figure-img" width="1050">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prueba-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7: Prueba 5: orden según la proyección sobre el primer componente principal.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Es elegante</strong> y no necesita saber dónde están las cabeceras. Pero sufre la misma limitación que la prueba 3: si la línea dobla, dos estaciones pueden proyectarse casi en el mismo punto del eje aunque estén lejos en el recorrido.</p>
+</section>
+</section>
+<section id="y-entonces" class="level2">
+<h2 class="anchored" data-anchor-id="y-entonces">¿Y entonces?</h2>
+<p>Cinco pruebas y una sola línea. Confiar en el orden del dataset fue lo único que falló de entrada. Las cabeceras salieron del máximo de la matriz de distancias, y para las estaciones del medio la distancia a una cabecera y el vecino más cercano devolvieron el recorrido de la H sin problemas. PCA llega a lo mismo por otro camino.</p>
+<p>Las tres son lo que se llama <a href="https://es.wikipedia.org/wiki/Heur%C3%ADstica#La_heur%C3%ADstica_como_metodolog%C3%ADa_cient%C3%ADfica">heurísticas</a>: atajos razonables que suelen dar una buena respuesta, sin garantía de que sea la correcta. Y comparten la misma limitación: funcionan porque los subtes se extienden de manera radial o lineal. Alcanzó con estirarla hacia Retiro, para que el vecino más cercano se perdiera. La distancia a la cabecera y PCA se rompen igual en cuanto la traza dobla sobre sí misma. Y la E muestra que ni siquiera las cabeceras son seguras: el par más lejano es Plaza de los Virreyes y Catalinas, no Retiro.</p>
+<p>Con esos cuidados, la pregunta del bar tiene una primera respuesta. Ordenando cada línea con el vecino más cercano desde la cabecera correcta, la distancia promedio entre estaciones consecutivas es de <strong>654 m</strong>. El tramo más corto está entre PASCO y ALBERTI (línea A, 256 m) y el más largo entre FEDERICO LACROZE y TRONADOR - VILLA ORTÚZAR (línea B, 1.084 m). La línea con las estaciones más juntas es la C (527 m en promedio) y la más espaciada, la B (730 m).</p>
+<p>La solución, para todas las líneas: el vecino más cercano de la prueba 4, arrancando desde la segunda cabecera del par más lejano.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1">vecino_desde_cabecera_2 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(datos) {</span>
+<span id="cb30-2">  d <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> units<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">drop_units</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_distance</span>(datos))</span>
+<span id="cb30-3">  n <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">nrow</span>(d)</span>
+<span id="cb30-4"></span>
+<span id="cb30-5">  cabeceras <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">which</span>(d <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">max</span>(d), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">arr.ind =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, ]</span>
+<span id="cb30-6">  recorrido <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> cabeceras[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>]</span>
+<span id="cb30-7"></span>
+<span id="cb30-8">  <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> (paso <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">seq_len</span>(n <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)) {</span>
+<span id="cb30-9">    actual     <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> recorrido[<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">length</span>(recorrido)]</span>
+<span id="cb30-10">    candidatos <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setdiff</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">seq_len</span>(n), recorrido)</span>
+<span id="cb30-11">    siguiente  <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> candidatos[<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">which.min</span>(d[actual, candidatos])]</span>
+<span id="cb30-12">    recorrido  <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(recorrido, siguiente)</span>
+<span id="cb30-13">  }</span>
+<span id="cb30-14"></span>
+<span id="cb30-15">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">slice</span>(datos, recorrido)</span>
+<span id="cb30-16">}</span>
+<span id="cb30-17"></span>
+<span id="cb30-18">red_ordenada <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> estaciones <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb30-19">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">split</span>(.<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>linea) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb30-20">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">map</span>(vecino_desde_cabecera_2) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb30-21">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">do.call</span>(rbind, .)</span></code></pre></div></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Código del mapa</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1">red_ordenada <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb31-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_coordinates</span>(geometry)[, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_coordinates</span>(geometry)[, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>]) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb31-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_drop_geometry</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb31-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(x, y, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">color =</span> linea, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">group =</span> linea)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb31-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_path</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">linewidth =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.4</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb31-6">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_point</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">shape =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">21</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">stroke =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb31-7">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">scale_color_manual</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">values =</span> COLORES_LINEAS) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb31-8">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">coord_equal</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb31-9">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">labs</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NULL</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NULL</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">color =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Línea"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb31-10">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">tema_subte</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb31-11">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">axis.text =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_blank</span>(), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">legend.position =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"right"</span>)</span></code></pre></div></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-red-ordenada" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-red-ordenada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://blog.juancib.ar/posts/2026-11-25-sobrepensar-el-subte/index_files/figure-html/fig-red-ordenada-1.png" class="img-fluid figure-img" width="1050">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-red-ordenada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;8: La red reconstruida usando sólo distancias entre estaciones, con el vecino más cercano.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Pero ese número depende de haber elegido bien desde dónde arrancar. Para no depender de eso necesito un método que no asuma que la línea es recta, y resulta que ese problema ya tiene nombre: el del viajante. Queda para la próxima.</p>
+<hr>
+<p><em>Código y datos: <a href="https://github.com/jpcib/subte_estaciones">github.com/jpcib/subte_estaciones</a>. Fuente: <a href="https://data.buenosaires.gob.ar/">Buenos Aires Data</a>, estaciones de subte.</em></p>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>SobrePensar</category>
+  <category>R</category>
+  <category>sf</category>
+  <category>análisis espacial</category>
+  <category>transporte</category>
+  <category>docencia</category>
+  <guid>https://blog.juancib.ar/posts/2026-11-25-sobrepensar-el-subte/</guid>
+  <pubDate>Thu, 08 Oct 2026 03:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>
